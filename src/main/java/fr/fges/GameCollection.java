@@ -76,9 +76,6 @@ public class GameCollection {
         }
     }
 
-
-
-
     private static void loadFromCsv() {
         try (BufferedReader reader = new BufferedReader(new FileReader(storageFile))) {
             games.clear();
