@@ -1,12 +1,10 @@
 classDiagram
-    %% Interface pour le stockage (Strategy Pattern)
     class GameRepository {
         <<interface>>
         +load() List~BoardGame~
         +save(games : List~BoardGame~) void
     }
 
-    %% Implémentation JSON
     class JsonGameRepository {
         -filePath : String
         -mapper : ObjectMapper
@@ -15,7 +13,6 @@ classDiagram
         +save(games : List~BoardGame~) void
     }
 
-    %% Implémentation CSV
     class CsvGameRepository {
         -filePath : String
         +CsvGameRepository(filePath : String)
@@ -23,17 +20,16 @@ classDiagram
         +save(games : List~BoardGame~) void
     }
 
-    %% Classe Métier (Logique pure, sans static)
     class GameCollection {
         -games : List~BoardGame~
-        -repository : GameRepository
-        +GameCollection(repository : GameRepository)
+        -gameRepository : GameRepository
+        +GameCollection(gameRepository : GameRepository)
         +addGame(game : BoardGame) void
-        +removeGame(gameTitle : String) void
+        +removeGame(game : BoardGame) void
         +getGames() List~BoardGame~
+        +viewAllGames() void
     }
 
-    %% Modèle de données (Record)
     class BoardGame {
         <<record>>
         +title : String
@@ -42,24 +38,23 @@ classDiagram
         +category : String
     }
 
-    %% Interface Utilisateur (Dépendant de la collection)
     class Menu {
         -collection : GameCollection
         -scanner : Scanner
         +Menu(collection : GameCollection)
+        +getUserInput(prompt : String)
         +run() void
         -displayMainMenu() void
         -handleAddGame() void
         -handleRemoveGame() void
         -handleListGames() void
+        -handleExit() void
     }
 
-    %% Point d'entrée (Injection de dépendances)
     class Main {
         +main(args : String[]) void
     }
 
-    %% Relations
     JsonGameRepository ..|> GameRepository : implements
     CsvGameRepository ..|> GameRepository : implements
     GameCollection --> GameRepository : uses (Dependency Injection)
