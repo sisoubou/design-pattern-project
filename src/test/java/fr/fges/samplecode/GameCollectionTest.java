@@ -41,5 +41,4 @@ class GameCollectionTest {
         assertEquals(0,collection.getGames().size(), "La collection devrait etre vide");
     }
 
-
 }
