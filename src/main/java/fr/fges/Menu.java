@@ -56,7 +56,7 @@ public class Menu {
 
         BoardGame game = new BoardGame(title, minPlayers, maxPlayers, category);
 
-        GameCollection.addGame(game);
+        collection.addGame(game);
         System.out.println("Board game added successfully.");
     }
 
@@ -65,11 +65,11 @@ public class Menu {
         String title = getUserInput("Title of game to remove");
 
         // get games from the collection, find the one that matches the title given by the user and remove
-        var games = GameCollection.getGames();
+        var games = collection.getGames();
 
         for (BoardGame game : games) {
             if (game.title().equals(title)) {
-                GameCollection.removeGame(game);
+                collection.removeGame(game);
                 System.out.println("Board game removed successfully.");
                 return;
             }
@@ -78,7 +78,7 @@ public class Menu {
     }
 
     public void handleListGames() {
-        GameCollection.viewAllGames();
+        collection.viewAllGames();
     }
 
     public void handleExit() {
