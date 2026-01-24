@@ -8,21 +8,24 @@ public class Main {
             System.exit(1);
         }
 
-        String storageFile = args[0];
+        String fileName = args[0];
+        GameRepository repository = null;
 
         // Check file extension
-        if (!storageFile.endsWith(".json") && !storageFile.endsWith(".csv")) {
-            System.out.println("Error: Storage file must have .json or .csv extension");
+        if (fileName.endsWith(".json")) {
+            repository = new JsonGameRepository(fileName);
+        } else if (fileName.endsWith(".csv")) {
+            repository = new CsvGameRepository(fileName);
+        } else {
+            System.out.println("Error: File must be .json or .csv");
             System.exit(1);
         }
 
-        GameCollection.setStorageFile(storageFile);
-        GameCollection.loadFromFile();
+        System.out.println("Using storage file: " + fileName);
 
-        System.out.println("Using storage file: " + storageFile);
+        GameCollection collection = new GameCollection(repository);
+        Menu menu = new Menu(collection);
 
-        while (true) {
-            Menu.displayMainMenu();
-        }
+        menu.run();
     }
 }
