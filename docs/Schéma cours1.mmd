@@ -1,0 +1,70 @@
+classDiagram
+    %% Interface pour le stockage (Strategy Pattern)
+    class GameRepository {
+        <<interface>>
+        +load() List~BoardGame~
+        +save(games : List~BoardGame~) void
+    }
+
+    %% Implémentation JSON
+    class JsonGameRepository {
+        -filePath : String
+        -mapper : ObjectMapper
+        +JsonGameRepository(filePath : String)
+        +load() List~BoardGame~
+        +save(games : List~BoardGame~) void
+    }
+
+    %% Implémentation CSV
+    class CsvGameRepository {
+        -filePath : String
+        +CsvGameRepository(filePath : String)
+        +load() List~BoardGame~
+        +save(games : List~BoardGame~) void
+    }
+
+    %% Classe Métier (Logique pure, sans static)
+    class GameCollection {
+        -games : List~BoardGame~
+        -repository : GameRepository
+        +GameCollection(repository : GameRepository)
+        +addGame(game : BoardGame) void
+        +removeGame(gameTitle : String) void
+        +getGames() List~BoardGame~
+    }
+
+    %% Modèle de données (Record)
+    class BoardGame {
+        <<record>>
+        +title : String
+        +minPlayers : int
+        +maxPlayers : int
+        +category : String
+    }
+
+    %% Interface Utilisateur (Dépendant de la collection)
+    class Menu {
+        -collection : GameCollection
+        -scanner : Scanner
+        +Menu(collection : GameCollection)
+        +run() void
+        -displayMainMenu() void
+        -handleAddGame() void
+        -handleRemoveGame() void
+        -handleListGames() void
+    }
+
+    %% Point d'entrée (Injection de dépendances)
+    class Main {
+        +main(args : String[]) void
+    }
+
+    %% Relations
+    JsonGameRepository ..|> GameRepository : implements
+    CsvGameRepository ..|> GameRepository : implements
+    GameCollection --> GameRepository : uses (Dependency Injection)
+    GameCollection o-- BoardGame : contains
+    Menu --> GameCollection : manages
+    Main ..> GameRepository : creates
+    Main ..> GameCollection : creates
+    Main ..> Menu : creates
