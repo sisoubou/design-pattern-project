@@ -3,6 +3,12 @@ package fr.fges;
 import java.util.Scanner;
 
 public class Menu {
+    GameCollection collection;
+    static Scanner scanner;
+
+    public Menu(GameCollection collection) {
+        this.collection = collection;
+    }
 
     public static String getUserInput(String prompt) {
         // Scanner is a class in java that helps to read input from various sources like keyboard input, files, etc.
@@ -11,7 +17,7 @@ public class Menu {
         System.out.printf("%s: ", prompt);
         // Read input for the keyboard
         return scanner.nextLine();
-    }
+            }
 
     public static void displayMainMenu() {
         String menuText = """
@@ -24,9 +30,20 @@ public class Menu {
                 """;
 
         System.out.println(menuText);
+
+        scanner = new Scanner(System.in);
+        String choice = scanner.nextLine();
+
+        switch (choice) {
+            case "1" -> handleAddGame();
+            case "2" -> handleRemoveGame();
+            case "3" -> handleListGames();
+            case "4" -> handleExit();
+            default -> System.out.println("Invalid choice. Please select a valid option.");
+        }
     }
 
-    public static void addGame() {
+    public static void handleAddGame() {
         String title = getUserInput("Title");
         String minPlayersStr = getUserInput("Minimum Players");
         String maxPlayersStr = getUserInput("Maximum Players");
@@ -41,7 +58,8 @@ public class Menu {
         System.out.println("Board game added successfully.");
     }
 
-    public static void removeGame() {
+
+    public static void handleRemoveGame() {
         String title = getUserInput("Title of game to remove");
 
         // get games from the collection, find the one that matches the title given by the user and remove
@@ -57,27 +75,13 @@ public class Menu {
         System.out.println("No board game found with that title.");
     }
 
-    public static void listAllGames() {
+    public static void handleListGames() {
         GameCollection.viewAllGames();
     }
 
-    public static void exit() {
+    public static void handleExit() {
         System.out.println("Exiting the application. Goodbye!");
         System.exit(0);
     }
 
-    public static void handleMenu() {
-        displayMainMenu();
-
-        Scanner scanner = new Scanner(System.in);
-        String choice = scanner.nextLine();
-
-        switch (choice) {
-            case "1" -> addGame();
-            case "2" -> removeGame();
-            case "3" -> listAllGames();
-            case "4" -> exit();
-            default -> System.out.println("Invalid choice. Please select a valid option.");
-        }
-    }
 }

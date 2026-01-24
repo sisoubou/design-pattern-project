@@ -22,7 +22,7 @@ public class Main {
         System.out.println("Using storage file: " + storageFile);
 
         while (true) {
-            Menu.handleMenu();
+            Menu.displayMainMenu();
         }
     }
 }
