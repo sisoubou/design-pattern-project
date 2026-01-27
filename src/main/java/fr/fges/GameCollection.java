@@ -1,13 +1,10 @@
 package fr.fges;
 
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class GameCollection {
-    private final List<BoardGame> games = new ArrayList<>();
+    private final List<BoardGame> games = new ArrayList<>(); //pas besoin
     private final GameRepository gameRepository;
 
     public GameCollection(GameRepository gameRepository) {
@@ -51,5 +48,20 @@ public class GameCollection {
             }
         }
         return true;
+    }
+
+    public void recommendGame(int nbPlayer) {
+        List<BoardGame> matchingGames = new ArrayList<>();
+        for (BoardGame game: games){
+            if (game.minPlayers() <= nbPlayer && game.maxPlayers() >= nbPlayer) {
+                matchingGames.add(game);
+            }
+        }
+        if (matchingGames.isEmpty()){
+            System.out.println("There are no games matching your request");
+        }else{
+            Random random = new Random();
+            BoardGame recommended = matchingGames.get(random.nextInt(matchingGames.size()));
+            System.out.println("Recommended Game: " + recommended.title() + " (" + recommended.minPlayers() + "-" + recommended.maxPlayers() + " players) - " + recommended.category());        }
     }
 }

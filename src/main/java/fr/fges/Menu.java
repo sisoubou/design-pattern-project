@@ -28,10 +28,17 @@ public class Menu {
                 case "1" -> handleAddGame();
                 case "2" -> handleRemoveGame();
                 case "3" -> handleListGames();
-                case "4" -> handleExit();
+                case "4" -> handleRecommendGame();
+                case "5" -> handleExit();
                 default -> System.out.println("Invalid choice. Please select a valid option.");
             }
         }
+    }
+
+    private void handleRecommendGame() {
+        String nbPlayerStr = getUserInput("How many players ?");
+        int nbPlayer = Integer.parseInt(nbPlayerStr);
+        collection.recommendGame(nbPlayer);
     }
 
     public void displayMainMenu() {
@@ -40,7 +47,8 @@ public class Menu {
                 1. Add Board Game
                 2. Remove Board Game
                 3. List All Board Games
-                4. Exit
+                4. Recommend Game
+                5. Exit
                 Please select an option (1-4):
                 """);
     }

@@ -1,0 +1,11 @@
+[ {
+  "title" : "Uno",
+  "minPlayers" : 1,
+  "maxPlayers" : 5,
+  "category" : "Card"
+}, {
+  "title" : "Monoply",
+  "minPlayers" : 6,
+  "maxPlayers" : 15,
+  "category" : "Board"
+} ]
