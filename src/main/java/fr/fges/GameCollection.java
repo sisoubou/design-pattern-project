@@ -22,7 +22,7 @@ public class GameCollection {
         }
     }
 
-    public void removeGame(BoardGame game) {
+    public static void removeGame(BoardGame game) {
         games.remove(game);
         gameRepository.save(games);
     }

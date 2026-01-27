@@ -55,16 +55,15 @@ public class Menu {
 
     public void handleAddGame() {
         String title = getUserInput("Title");
-        String minPlayersStr = getUserInput("Minimum Players");
-        String maxPlayersStr = getUserInput("Maximum Players");
-        String category = getUserInput("Category (e.g., fantasy, cooperative, family, strategy)");
+        String minPlayersStr = getUserInput("Minimum number of players");
+        String maxPlayersStr = getUserInput("Maximum number of players");
+        String category = getUserInput("Category");
 
         int minPlayers = Integer.parseInt(minPlayersStr);
         int maxPlayers = Integer.parseInt(maxPlayersStr);
 
-        BoardGame game = new BoardGame(title, minPlayers, maxPlayers, category);
-
-        collection.addGame(game);
+        BoardGame newGame = new BoardGame(title, minPlayers, maxPlayers, category);
+        collection.addGame(newGame);
     }
 
 
