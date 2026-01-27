@@ -22,6 +22,9 @@ class GameCollectionTest {
         BoardGame myGame = new BoardGame("Uno", 2, 10, "Card");
         collection.addGame(myGame);
 
+        BoardGame mySecondGame = new BoardGame("Uno", 2, 10, "Card");
+        collection.addGame(mySecondGame);
+
         assertEquals(1,collection.getGames().size(), "La collection devrait contenir 1 jeu");
     }
 
