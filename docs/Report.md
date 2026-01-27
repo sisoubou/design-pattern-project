@@ -9,3 +9,4 @@ This interface is implemented by two classes JsonGameRepository and CsvGameRepos
 We removed the static methods from all classes and replaced them with instance methods.
 
 Then we tested the new implemented ideas with mocks to ensure that they work as expected.
+

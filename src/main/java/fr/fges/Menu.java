@@ -57,7 +57,6 @@ public class Menu {
         BoardGame game = new BoardGame(title, minPlayers, maxPlayers, category);
 
         collection.addGame(game);
-        System.out.println("Board game added successfully.");
     }
 
 
