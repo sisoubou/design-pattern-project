@@ -1,6 +1,5 @@
 package fr.fges;
 
-
 import java.util.*;
 
 public class GameCollection {
@@ -13,7 +12,7 @@ public class GameCollection {
     }
 
     public void addGame(BoardGame game) {
-        if (!alreadyExist(game)){
+        if (alreadyExist(game)){
             System.out.println("Error: A game with title '" + game.title() + "' already exists in the collection.");
         }else {
             games.add(game);
@@ -22,7 +21,7 @@ public class GameCollection {
         }
     }
 
-    public static void removeGame(BoardGame game) {
+    public void removeGame(BoardGame game) {
         games.remove(game);
         gameRepository.save(games);
     }
@@ -44,10 +43,10 @@ public class GameCollection {
     public boolean alreadyExist (BoardGame newGame){
         for (BoardGame game: games){
             if (Objects.equals(newGame.title(), game.title())) {
-                return false;
+                return true;
             }
         }
-        return true;
+        return false;
     }
 
     public void recommendGame(int nbPlayer) {

@@ -17,7 +17,7 @@ public class RemoveGameCommand extends InteractiveCommand{
 
         for (BoardGame game : games) {
             if (game.title().equals(title)) {
-                GameCollection.removeGame(game);
+                gameCollection.removeGame(game);
                 System.out.println("Board game removed successfully.");
                 return;
             }

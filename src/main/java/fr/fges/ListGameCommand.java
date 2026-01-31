@@ -1,10 +1,8 @@
 package fr.fges;
 
-import java.util.Scanner;
-
 public class ListGameCommand extends InteractiveCommand{
-    public ListGameCommand(GameCollection gameCollection, Scanner scanner) {
-        super(gameCollection, scanner);
+    public ListGameCommand(GameCollection gameCollection) {
+        super(gameCollection, null);
     }
 
     @Override

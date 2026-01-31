@@ -15,6 +15,9 @@ public class CsvGameRepository implements GameRepository{
     public List<BoardGame> load() {
         List<BoardGame> games = new ArrayList<>();
         File file = new File(filePath);
+        if (!file.exists()) {
+            return new ArrayList<>();
+        }
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;
             boolean firstLine = true;

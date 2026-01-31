@@ -19,6 +19,9 @@ public class JsonGameRepository implements GameRepository{
     @Override
     public List<BoardGame> load() {
         File file = new File(filepath);
+        if (!file.exists()) {
+            return new ArrayList<>();
+        }
         try {
             return mapper.readValue(file, new TypeReference<List<BoardGame>>() {});
         } catch (IOException e) {
