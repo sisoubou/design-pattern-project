@@ -63,4 +63,25 @@ public class GameCollection {
             BoardGame recommended = matchingGames.get(random.nextInt(matchingGames.size()));
             System.out.println("Recommended Game: " + recommended.title() + " (" + recommended.minPlayers() + "-" + recommended.maxPlayers() + " players) - " + recommended.category());        }
     }
+
+    public void getRandomGames (int count){
+        if (games.isEmpty()) {
+            System.out.println("No board games in collection.");
+            return;
+        }
+        if (count > games.size()) {
+            System.out.println("Not enough games in collection to get " + count + " random games.");
+            return;
+        }
+        Random random = new Random();
+        Set<BoardGame> randomGames = new HashSet<>();
+        while (randomGames.size() < Math.min(count, games.size())) {
+            BoardGame randomGame = games.get(random.nextInt(games.size()));
+            randomGames.add(randomGame);
+        }
+        System.out.println("== Summary (" + count + " random games) ==");
+        for (BoardGame game : randomGames) {
+            System.out.println("- " + game.title() + " (" + game.minPlayers() + "-" + game.maxPlayers() + " players) - " + game.category());
+        }
+    }
 }
