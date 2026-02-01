@@ -10,3 +10,11 @@ We removed the static methods from all classes and replaced them with instance m
 
 Then we tested the new implemented ideas with mocks to ensure that they work as expected.
 
+
+## Week 2
+
+This week, we refactored the codebase to separate each command into its own class and introduced the Command and InteractiveCommand abstractions. 
+We updated the GameCollection logic to improve testability and added comprehensive unit tests for all repositories and fonctionnalities. 
+We also implemented three new features: prevention of duplicate games in the collection, a recommend game function based on player count, and a summary feature that displays random games only on weekends.
+
+

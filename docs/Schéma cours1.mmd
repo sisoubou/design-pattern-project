@@ -6,9 +6,9 @@ classDiagram
     }
 
     class JsonGameRepository {
-        -filePath : String
+        -filepath : String
         -mapper : ObjectMapper
-        +JsonGameRepository(filePath : String)
+        +JsonGameRepository(filepath : String)
         +load() List~BoardGame~
         +save(games : List~BoardGame~) void
     }
@@ -28,6 +28,9 @@ classDiagram
         +removeGame(game : BoardGame) void
         +getGames() List~BoardGame~
         +viewAllGames() void
+        +alreadyExist(game : BoardGame) boolean
+        +recommendGame(nbPlayer : int) void
+        +getRandomGames(count : int) void
     }
 
     class BoardGame {
@@ -38,17 +41,56 @@ classDiagram
         +category : String
     }
 
+    class Command {
+        <<interface>>
+        +execute() void
+        +getDescription() String
+    }
+
+    class InteractiveCommand {
+        #gameCollection : GameCollection
+        #scanner : Scanner
+        +getUserInput(prompt : String) String
+    }
+
+    class AddGameCommand {
+        +AddGameCommand(GameCollection, Scanner)
+        +execute() void
+        +getDescription() String
+    }
+    class RemoveGameCommand {
+        +RemoveGameCommand(GameCollection, Scanner)
+        +execute() void
+        +getDescription() String
+    }
+    class ListGameCommand {
+        +ListGameCommand(GameCollection)
+        +execute() void
+        +getDescription() String
+    }
+    class RecommendGameCommand {
+        +RecommendGameCommand(GameCollection, Scanner)
+        +execute() void
+        +getDescription() String
+    }
+    class SummaryCommand {
+        +SummaryCommand(GameCollection, Scanner)
+        +execute() void
+        +getDescription() String
+    }
+    class ExitCommand {
+        +ExitCommand(GameCollection, Scanner)
+        +ExitCommand()
+        +execute() void
+        +getDescription() String
+    }
+
     class Menu {
         -collection : GameCollection
         -scanner : Scanner
         +Menu(collection : GameCollection)
-        +getUserInput(prompt : String)
         +run() void
         -displayMainMenu() void
-        -handleAddGame() void
-        -handleRemoveGame() void
-        -handleListGames() void
-        -handleExit() void
     }
 
     class Main {
@@ -63,3 +105,16 @@ classDiagram
     Main ..> GameRepository : creates
     Main ..> GameCollection : creates
     Main ..> Menu : creates
+    InteractiveCommand <|-- AddGameCommand
+    InteractiveCommand <|-- RemoveGameCommand
+    InteractiveCommand <|-- ListGameCommand
+    InteractiveCommand <|-- RecommendGameCommand
+    InteractiveCommand <|-- SummaryCommand
+    InteractiveCommand <|-- ExitCommand
+    Command <|.. InteractiveCommand
+    Command <|.. AddGameCommand
+    Command <|.. RemoveGameCommand
+    Command <|.. ListGameCommand
+    Command <|.. RecommendGameCommand
+    Command <|.. SummaryCommand
+    Command <|.. ExitCommand
