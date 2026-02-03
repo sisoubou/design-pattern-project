@@ -76,6 +76,23 @@ public class GameCollection {
             randomGames.add(randomGame);
         }
         return randomGames;
+    }
 
+    public List<BoardGame> getAllGamesNumberMatch(int nbPlayer){
+        if (games.isEmpty()) {
+            return Collections.emptyList();
+        }
+        List<BoardGame> allGamesMatch = new ArrayList<>();
+        List<BoardGame> gamesSorted = viewAllGames();
+        for (BoardGame game: gamesSorted){
+            if (game.minPlayers() <= nbPlayer && game.maxPlayers() >= nbPlayer) {
+                allGamesMatch.add(game);
+            }
+        }
+        if (allGamesMatch.isEmpty()){
+            throw new IllegalArgumentException();
+        }else{
+            return allGamesMatch;
+        }
     }
 }
