@@ -2,10 +2,12 @@ package fr.fges.command;
 
 import fr.fges.BoardGame;
 import fr.fges.GameCollection;
+import fr.fges.GameUI;
 
 import java.util.Scanner;
 
 public class AddGameCommand extends InteractiveCommand {
+    public final GameUI gameUI = new GameUI();
 
     public AddGameCommand(GameCollection gameCollection, Scanner scanner) {
         super(gameCollection, scanner);
@@ -23,7 +25,12 @@ public class AddGameCommand extends InteractiveCommand {
 
         BoardGame game = new BoardGame(title, minPlayers, maxPlayers, category);
 
-        gameCollection.addGame(game);
+        try {
+            gameCollection.addGame(game);
+            gameUI.showSuccessAddGame(title);
+        } catch (IllegalArgumentException e) {
+            gameUI.showErrorAlreadyExist(title);
+        }
     }
 
     @Override
