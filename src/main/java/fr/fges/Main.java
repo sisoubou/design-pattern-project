@@ -1,6 +1,7 @@
 package fr.fges;
 
 import fr.fges.data.CsvGameRepository;
+import fr.fges.data.DataFactory;
 import fr.fges.data.GameRepository;
 import fr.fges.data.JsonGameRepository;
 
@@ -11,19 +12,10 @@ public class Main {
             System.out.println("Storage file must be .json or .csv");
             System.exit(1);
         }
-
         String fileName = args[0];
-        GameRepository repository = null;
+        DataFactory dataFactory = new DataFactory();
+        GameRepository repository = dataFactory.createRepository(fileName);
 
-        // Check file extension
-        if (fileName.endsWith(".json")) {
-            repository = new JsonGameRepository(fileName);
-        } else if (fileName.endsWith(".csv")) {
-            repository = new CsvGameRepository(fileName);
-        } else {
-            System.out.println("Error: File must be .json or .csv");
-            System.exit(1);
-        }
 
         System.out.println("Using storage file: " + fileName);
 
