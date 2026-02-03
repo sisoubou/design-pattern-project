@@ -1,9 +1,14 @@
 package fr.fges;
 
+import fr.fges.command.Command;
+import fr.fges.command.CommandFactory;
 import fr.fges.data.CsvGameRepository;
 import fr.fges.data.DataFactory;
 import fr.fges.data.GameRepository;
 import fr.fges.data.JsonGameRepository;
+
+import java.util.Map;
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
@@ -20,7 +25,12 @@ public class Main {
         System.out.println("Using storage file: " + fileName);
 
         GameCollection collection = new GameCollection(repository);
-        Menu menu = new Menu(collection);
+        Scanner scanner = new Scanner(System.in);
+
+        CommandFactory commandFactory = new CommandFactory(collection, scanner);
+        Map<String, Command> commands = commandFactory.createCommands();
+
+        Menu menu = new Menu(commands, scanner);
 
         menu.run();
     }
