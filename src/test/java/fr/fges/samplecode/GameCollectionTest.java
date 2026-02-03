@@ -5,6 +5,7 @@ import fr.fges.GameCollection;
 import fr.fges.GameRepository;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
+import org.mockito.Mockito;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -300,4 +301,4 @@ class GameCollectionTests {
         assertTrue(output.contains("players"));
     }
 }
-}
+
