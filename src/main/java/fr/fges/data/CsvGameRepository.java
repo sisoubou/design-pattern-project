@@ -1,10 +1,12 @@
-package fr.fges;
+package fr.fges.data;
+
+import fr.fges.BoardGame;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CsvGameRepository implements GameRepository{
+public class CsvGameRepository implements GameRepository {
     private final String filePath;
 
     public CsvGameRepository(String filePath) {

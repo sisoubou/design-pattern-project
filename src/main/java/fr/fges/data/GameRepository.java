@@ -1,4 +1,6 @@
-package fr.fges;
+package fr.fges.data;
+
+import fr.fges.BoardGame;
 
 import java.util.List;
 

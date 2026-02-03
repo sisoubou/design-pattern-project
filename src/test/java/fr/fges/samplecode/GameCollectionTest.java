@@ -2,7 +2,7 @@ package fr.fges.samplecode;
 
 import fr.fges.BoardGame;
 import fr.fges.GameCollection;
-import fr.fges.GameRepository;
+import fr.fges.data.GameRepository;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
@@ -17,7 +17,7 @@ import static org.mockito.Mockito.*;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
-class GameCollectionTests {
+class   GameCollectionTests {
 
 
     @Test

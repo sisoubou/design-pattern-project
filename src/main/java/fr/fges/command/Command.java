@@ -1,4 +1,4 @@
-package fr.fges;
+package fr.fges.command;
 
 public interface Command {
     void execute();

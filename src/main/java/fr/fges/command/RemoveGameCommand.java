@@ -1,8 +1,11 @@
-package fr.fges;
+package fr.fges.command;
+
+import fr.fges.BoardGame;
+import fr.fges.GameCollection;
 
 import java.util.Scanner;
 
-public class RemoveGameCommand extends InteractiveCommand{
+public class RemoveGameCommand extends InteractiveCommand {
 
     public RemoveGameCommand(GameCollection gameCollection, Scanner scanner) {
         super(gameCollection, scanner);

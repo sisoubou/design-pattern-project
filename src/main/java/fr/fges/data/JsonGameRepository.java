@@ -1,14 +1,15 @@
-package fr.fges;
+package fr.fges.data;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import fr.fges.BoardGame;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class JsonGameRepository implements GameRepository{
+public class JsonGameRepository implements GameRepository {
     private final String filepath;
     private final ObjectMapper mapper = new ObjectMapper();
 

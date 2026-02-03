@@ -1,6 +1,6 @@
 package fr.fges.samplecode;
 
-import fr.fges.CsvGameRepository;
+import fr.fges.data.CsvGameRepository;
 import fr.fges.BoardGame;
 import org.junit.jupiter.api.Test;
 import java.io.*;

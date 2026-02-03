@@ -1,8 +1,10 @@
-package fr.fges;
+package fr.fges.command;
+
+import fr.fges.GameCollection;
 
 import java.util.Scanner;
 
-public abstract class InteractiveCommand implements Command{
+public abstract class InteractiveCommand implements Command {
     protected final GameCollection gameCollection;
     protected final Scanner scanner;
 

@@ -1,4 +1,7 @@
-package fr.fges;
+package fr.fges.command;
+
+import fr.fges.BoardGame;
+import fr.fges.GameCollection;
 
 import java.util.Scanner;
 

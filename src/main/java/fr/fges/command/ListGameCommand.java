@@ -1,6 +1,8 @@
-package fr.fges;
+package fr.fges.command;
 
-public class ListGameCommand extends InteractiveCommand{
+import fr.fges.GameCollection;
+
+public class ListGameCommand extends InteractiveCommand {
     public ListGameCommand(GameCollection gameCollection) {
         super(gameCollection, null);
     }

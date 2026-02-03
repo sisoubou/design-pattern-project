@@ -1,8 +1,10 @@
-package fr.fges;
+package fr.fges.command;
+
+import fr.fges.GameCollection;
 
 import java.util.Scanner;
 
-public class RecommendGameCommand extends InteractiveCommand{
+public class RecommendGameCommand extends InteractiveCommand {
     public RecommendGameCommand(GameCollection gameCollection, Scanner scanner) {
         super(gameCollection, scanner);
     }

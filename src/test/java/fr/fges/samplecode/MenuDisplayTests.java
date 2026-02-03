@@ -2,9 +2,9 @@ package fr.fges.samplecode;
 
 import fr.fges.Menu;
 import fr.fges.GameCollection;
-import fr.fges.GameRepository;
+import fr.fges.data.GameRepository;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
+
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.Collections;

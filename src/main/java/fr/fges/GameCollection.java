@@ -1,5 +1,7 @@
 package fr.fges;
 
+import fr.fges.data.GameRepository;
+
 import java.util.*;
 
 public class GameCollection {

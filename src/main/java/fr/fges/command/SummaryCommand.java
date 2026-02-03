@@ -1,6 +1,7 @@
-package fr.fges;
+package fr.fges.command;
 
-import java.util.List;
+import fr.fges.GameCollection;
+
 import java.util.Scanner;
 
 public class SummaryCommand extends InteractiveCommand {

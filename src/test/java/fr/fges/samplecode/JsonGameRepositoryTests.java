@@ -1,6 +1,6 @@
 package fr.fges.samplecode;
 
-import fr.fges.JsonGameRepository;
+import fr.fges.data.JsonGameRepository;
 import fr.fges.BoardGame;
 import org.junit.jupiter.api.Test;
 import java.io.*;

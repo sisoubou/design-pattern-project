@@ -1,5 +1,7 @@
 package fr.fges;
 
+import fr.fges.command.*;
+
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.HashMap;

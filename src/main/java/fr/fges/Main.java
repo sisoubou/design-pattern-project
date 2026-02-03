@@ -1,5 +1,9 @@
 package fr.fges;
 
+import fr.fges.data.CsvGameRepository;
+import fr.fges.data.GameRepository;
+import fr.fges.data.JsonGameRepository;
+
 public class Main {
     public static void main(String[] args) {
         if (args.length < 1) {
