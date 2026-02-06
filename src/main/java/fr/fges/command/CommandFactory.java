@@ -27,12 +27,10 @@ public class CommandFactory {
 
         if (isWeekend()){
             commands.put("5", new SummaryCommand(gameCollection, scanner));
-            commands.put("6", new UndoCommand(gameCollection, scanner, new CommandHistory()));
-            commands.put("8", new ExitCommand());
+            commands.put("6", new ExitCommand());
             return commands;
         }else {
-            commands.put("5", new UndoCommand(gameCollection, scanner, new CommandHistory()));
-            commands.put("7", new ExitCommand());
+            commands.put("5", new ExitCommand());
             return commands;
         }
     }
