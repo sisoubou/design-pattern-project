@@ -7,10 +7,10 @@ import fr.fges.GameUI;
 import java.util.Scanner;
 
 public class AddGameCommand extends InteractiveCommand {
-    public final GameUI gameUI = new GameUI();
+    private final GameUI gameUI = new GameUI();
     private final CommandHistory history;
 
-    public AddGameCommand(GameCollection gameCollection, Scanner scanner) {
+    public AddGameCommand(GameCollection gameCollection, Scanner scanner, CommandHistory history) {
         super(gameCollection, scanner);
         this.history = history;
     }
@@ -22,17 +22,17 @@ public class AddGameCommand extends InteractiveCommand {
         String maxPlayersStr = getUserInput("Maximum Players");
         String category = getUserInput("Category (e.g., fantasy, cooperative, family, strategy)");
 
-        int minPlayers = Integer.parseInt(minPlayersStr);
-        int maxPlayers = Integer.parseInt(maxPlayersStr);
-
-        BoardGame game = new BoardGame(title, minPlayers, maxPlayers, category);
-
         try {
+            int minPlayers = Integer.parseInt(minPlayersStr);
+            int maxPlayers = Integer.parseInt(maxPlayersStr);
+            BoardGame game = new BoardGame(title, minPlayers, maxPlayers, category);
+
             gameCollection.addGame(game);
             gameUI.showSuccessAddGame(title);
 
             history.push(() -> {
                 gameCollection.removeGame(game);
+                return "Removed \"" + game.title() + "\" from collection.";
             });
         } catch (IllegalArgumentException e) {
             gameUI.showErrorAlreadyExist(title);

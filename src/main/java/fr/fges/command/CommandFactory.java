@@ -19,18 +19,23 @@ public class CommandFactory {
 
     public Map<String, Command> createCommands() {
         Map<String, Command> commands = new LinkedHashMap<>();
+        CommandHistory history = new CommandHistory();
 
-        commands.put("1", new AddGameCommand(gameCollection, scanner));
-        commands.put("2", new RemoveGameCommand(gameCollection, scanner));
+        commands.put("1", new AddGameCommand(gameCollection, scanner, history));
+        commands.put("2", new RemoveGameCommand(gameCollection, scanner, history));
         commands.put("3", new ListGameCommand(gameCollection));
         commands.put("4", new RecommendGameCommand(gameCollection, scanner));
 
         if (isWeekend()){
             commands.put("5", new SummaryCommand(gameCollection, scanner));
-            commands.put("6", new ExitCommand());
+            commands.put("6", new UndoCommand(gameCollection, scanner, history));
+            commands.put("7", new AllGamesNumberMatchCommand(gameCollection, scanner));
+            commands.put("8", new ExitCommand());
             return commands;
         }else {
-            commands.put("5", new ExitCommand());
+            commands.put("5", new UndoCommand(gameCollection, scanner, history));
+            commands.put("6", new AllGamesNumberMatchCommand(gameCollection, scanner));
+            commands.put("7", new ExitCommand());
             return commands;
         }
     }

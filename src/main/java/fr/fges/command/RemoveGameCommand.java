@@ -10,7 +10,7 @@ public class RemoveGameCommand extends InteractiveCommand {
     private final GameUI gameUI = new GameUI();
     private final CommandHistory history;
 
-    public RemoveGameCommand(GameCollection gameCollection, Scanner scanner) {
+    public RemoveGameCommand(GameCollection gameCollection, Scanner scanner, CommandHistory history) {
         super(gameCollection, scanner);
         this.history = history;
     }
@@ -18,14 +18,22 @@ public class RemoveGameCommand extends InteractiveCommand {
     @Override
     public void execute() {
         String title = getUserInput("Title of game to remove");
-
-        // get games from the collection, find the one that matches the title given by the user and remove
         var games = gameCollection.getGames();
 
         for (BoardGame game : games) {
             if (game.title().equals(title)) {
                 gameCollection.removeGame(game);
                 System.out.println("Board game removed successfully.");
+
+                history.push(() -> {
+                    try {
+                        gameCollection.addGame(game);
+                        return "Added \"" + game.title() + "\" back to the collection";
+                    } catch (Exception e) {
+                        return "Error restoring " + game.title();
+                    }
+                });
+
                 return;
             }
         }

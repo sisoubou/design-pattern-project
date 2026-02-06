@@ -13,12 +13,12 @@ public class CommandHistory {
 
     public void undo(GameUI gameUI) {
         if (history.isEmpty()) {
-            gameUI.showError("No actions to undo.");
+            gameUI.showError("Nothing to undo.");
             return;
         } else {
             UndoAction lastAction = history.pop();
-            lastAction.undo();
-            System.out.println("Undone : Removed " + game.lastAddedGameTitle + " from collection");
+            String resultMessage = lastAction.undo();
+            System.out.println("Undone : " + resultMessage);
         }
     }
 

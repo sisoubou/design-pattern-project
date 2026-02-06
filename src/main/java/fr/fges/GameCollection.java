@@ -90,4 +90,8 @@ public class GameCollection {
             return allGamesMatch;
         }
     }
+
+    public List<BoardGame> getGames() {
+        return new ArrayList<>(games);
+    }
 }

@@ -10,7 +10,7 @@ public class UndoCommand extends InteractiveCommand {
     private final GameUI gameUI = new GameUI();
 
     public UndoCommand(GameCollection collection, Scanner scanner, CommandHistory history) {
-        super(gameCollection, scanner);
+        super(collection, scanner);
         this.history = history;
     }
 
