@@ -2,13 +2,17 @@ package fr.fges.command;
 
 import fr.fges.BoardGame;
 import fr.fges.GameCollection;
+import fr.fges.GameUI;
 
 import java.util.Scanner;
 
 public class RemoveGameCommand extends InteractiveCommand {
+    private final GameUI gameUI = new GameUI();
+    private final CommandHistory history;
 
     public RemoveGameCommand(GameCollection gameCollection, Scanner scanner) {
         super(gameCollection, scanner);
+        this.history = history;
     }
 
     @Override
@@ -26,6 +30,7 @@ public class RemoveGameCommand extends InteractiveCommand {
             }
         }
         System.out.println("No board game found with that title.");
+
     }
 
     @Override

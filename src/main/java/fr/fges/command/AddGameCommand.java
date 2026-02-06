@@ -8,9 +8,11 @@ import java.util.Scanner;
 
 public class AddGameCommand extends InteractiveCommand {
     public final GameUI gameUI = new GameUI();
+    private final CommandHistory history;
 
     public AddGameCommand(GameCollection gameCollection, Scanner scanner) {
         super(gameCollection, scanner);
+        this.history = history;
     }
 
     @Override
@@ -28,6 +30,10 @@ public class AddGameCommand extends InteractiveCommand {
         try {
             gameCollection.addGame(game);
             gameUI.showSuccessAddGame(title);
+
+            history.push(() -> {
+                gameCollection.removeGame(game);
+            });
         } catch (IllegalArgumentException e) {
             gameUI.showErrorAlreadyExist(title);
         }

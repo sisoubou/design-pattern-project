@@ -1,12 +1,11 @@
 package fr.fges;
 
 import fr.fges.data.GameRepository;
-import fr.fges.GameUI;
 
 import java.util.*;
 
 public class GameCollection {
-    private final List<BoardGame> games = new ArrayList<>(); //pas besoin
+    private final List<BoardGame> games = new ArrayList<>();
     private final GameRepository gameRepository;
 
     public GameCollection(GameRepository gameRepository) {
@@ -26,10 +25,6 @@ public class GameCollection {
     public void removeGame(BoardGame game) {
         games.remove(game);
         gameRepository.save(games);
-    }
-
-    public List<BoardGame> getGames(){
-        return games;
     }
 
     public List<BoardGame> viewAllGames() {

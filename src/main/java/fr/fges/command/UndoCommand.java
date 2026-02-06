@@ -1,0 +1,26 @@
+package fr.fges.command;
+
+import fr.fges.GameCollection;
+import fr.fges.GameUI;
+
+import java.util.Scanner;
+
+public class UndoCommand extends InteractiveCommand {
+    private final CommandHistory history;
+    private final GameUI gameUI = new GameUI();
+
+    public UndoCommand(GameCollection collection, Scanner scanner, CommandHistory history) {
+        super(gameCollection, scanner);
+        this.history = history;
+    }
+
+    @Override
+    public void execute() {
+        history.undo(gameUI);
+    }
+
+    @Override
+    public String getDescription() {
+        return "Undo Last Action:";
+    }
+}
