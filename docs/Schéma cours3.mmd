@@ -1,0 +1,143 @@
+classDiagram
+    %% --- DATA ---
+    class GameRepository {
+        <<interface>>
+        +load() List~BoardGame~
+        +save(games : List~BoardGame~) void
+    }
+    class JsonGameRepository {
+        -filepath : String
+        +JsonGameRepository(filepath : String)
+        +load() List~BoardGame~
+        +save(games : List~BoardGame~) void
+    }
+    class CsvGameRepository {
+        -filePath : String
+        +CsvGameRepository(filePath : String)
+        +load() List~BoardGame~
+        +save(games : List~BoardGame~) void
+    }
+    class DataFactory {
+        +createRepository(fileName : String) GameRepository
+    }
+
+    %% --- DOMAIN ---
+    class BoardGame {
+        <<record>>
+        +title : String
+        +minPlayers : int
+        +maxPlayers : int
+        +category : String
+    }
+    class GameCollection {
+        -games : List~BoardGame~
+        -gameRepository : GameRepository
+        +GameCollection(gameRepository : GameRepository)
+        +addGame(game : BoardGame) void
+        +removeGame(game : BoardGame) void
+        +getGames() List~BoardGame~
+        +viewAllGames() List~BoardGame~
+        +alreadyExist(game : BoardGame) boolean
+        +recommendGame(nbPlayer : int) Optional~BoardGame~
+        +getRandomGames(count : int) List~BoardGame~
+        +getAllGamesNumberMatch(nbPlayer : int) List~BoardGame~
+    }
+    class GameUI {
+        +showErrorAlreadyExist(title : String) void
+        +showSuccessAddGame(title : String) void
+        +showErrorEmptyList() void
+        +showGame(game : BoardGame) void
+        +showErrorNoMatch() void
+        +showRecommendedGame(game : BoardGame) void
+        +showErrorNotEnoughGames(count : int) void
+        +showList(games : List~BoardGame~) void
+        +showSummary(games : List~BoardGame~) void
+        +showError(msg : String) void
+    }
+
+    %% --- COMMAND ---
+    class Command {
+        <<interface>>
+        +execute() void
+        +getDescription() String
+    }
+    class InteractiveCommand {
+        #gameCollection : GameCollection
+        #scanner : Scanner
+        +getUserInput(prompt : String) String
+    }
+    class AddGameCommand
+    class RemoveGameCommand
+    class ListGameCommand
+    class RecommendGameCommand
+    class SummaryCommand
+    class ExitCommand
+    class UndoCommand
+    class AllGamesNumberMatchCommand
+    class CommandFactory {
+        +createCommands() Map~String, Command~
+    }
+    class CommandHistory {
+        +push(action : UndoAction) void
+        +undo(gameUI : GameUI) void
+    }
+    class UndoAction {
+        <<interface>>
+        +undo() String
+    }
+
+    %% --- UI ---
+    class Menu {
+        -commands : Map~String, Command~
+        -scanner : Scanner
+        +Menu(commands : Map~String, Command~, scanner : Scanner)
+        +run() void
+    }
+    class Main {
+        +main(args : String[]) void
+    }
+
+    %% --- RELATIONS ---
+    JsonGameRepository ..|> GameRepository
+    CsvGameRepository ..|> GameRepository
+    DataFactory --> GameRepository
+    GameCollection --> GameRepository
+    GameCollection o-- BoardGame
+    Menu --> Command
+    Menu --> Scanner
+    Main ..> GameRepository
+    Main ..> GameCollection
+    Main ..> Menu
+    Main ..> CommandFactory
+    CommandFactory --> Command
+    CommandFactory --> GameCollection
+    CommandFactory --> Scanner
+    CommandFactory --> CommandHistory
+    CommandHistory o-- UndoAction
+    UndoCommand --> CommandHistory
+    UndoCommand --> GameUI
+    AddGameCommand --> CommandHistory
+    AddGameCommand --> GameUI
+    RemoveGameCommand --> CommandHistory
+    RemoveGameCommand --> GameUI
+    ListGameCommand --> GameUI
+    RecommendGameCommand --> GameUI
+    SummaryCommand --> GameUI
+    AllGamesNumberMatchCommand --> GameUI
+    InteractiveCommand <|-- AddGameCommand
+    InteractiveCommand <|-- RemoveGameCommand
+    InteractiveCommand <|-- ListGameCommand
+    InteractiveCommand <|-- RecommendGameCommand
+    InteractiveCommand <|-- SummaryCommand
+    InteractiveCommand <|-- ExitCommand
+    InteractiveCommand <|-- UndoCommand
+    InteractiveCommand <|-- AllGamesNumberMatchCommand
+    Command <|.. InteractiveCommand
+    Command <|.. AddGameCommand
+    Command <|.. RemoveGameCommand
+    Command <|.. ListGameCommand
+    Command <|.. RecommendGameCommand
+    Command <|.. SummaryCommand
+    Command <|.. ExitCommand
+    Command <|.. UndoCommand
+    Command <|.. AllGamesNumberMatchCommand

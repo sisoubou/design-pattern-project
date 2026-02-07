@@ -18,3 +18,8 @@ We updated the GameCollection logic to improve testability and added comprehensi
 We also implemented three new features: prevention of duplicate games in the collection, a recommend game function based on player count, and a summary feature that displays random games only on weekends.
 
 
+## Week 3
+
+This week, we implemented two new features: undoing the last action and listing games for a specific number of players.
+We also created new factories, including CommandFactory and DataFactory.
+Additionally, we improved the code structure by organizing it into new packages.
