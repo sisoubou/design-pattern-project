@@ -18,7 +18,7 @@ public class JsonGameRepository implements GameRepository {
     }
 
     @Override
-    public List<BoardGame> load() {
+    public List<BoardGame> getAll() {
         File file = new File(filepath);
         if (!file.exists()) {
             return new ArrayList<>();
@@ -32,6 +32,19 @@ public class JsonGameRepository implements GameRepository {
     }
 
     @Override
+    public void add(BoardGame game) {
+        List<BoardGame> games = getAll();
+        games.add(game);
+        save(games);
+    }
+
+    @Override
+    public void remove(BoardGame game) {
+        List<BoardGame> games = getAll();
+        games.remove(game);
+        save(games);
+    }
+
     public void save(List<BoardGame> games) {
         try {
             mapper.writerWithDefaultPrettyPrinter().writeValue(new File(filepath), games);

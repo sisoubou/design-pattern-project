@@ -2,6 +2,7 @@ package fr.fges.command;
 
 import fr.fges.BoardGame;
 import fr.fges.GameCollection;
+import fr.fges.GameResearch;
 import fr.fges.GameUI;
 
 import java.util.List;
@@ -10,15 +11,16 @@ import java.util.Scanner;
 public class SummaryCommand extends InteractiveCommand {
     public final GameUI gameUI = new GameUI();
 
-    public SummaryCommand(GameCollection gameCollection, Scanner scanner) {
-        super(gameCollection, scanner);
+    protected SummaryCommand(GameCollection gameCollection, Scanner scanner, GameResearch gameResearch) {
+        super(gameCollection, scanner, gameResearch);
     }
+
 
     @Override
     public void execute() {
 
         try {
-            List<BoardGame> randomGames= gameCollection.getRandomGames(3);
+            List<BoardGame> randomGames= gameResearch.getRandomGames(3);
             if(randomGames.isEmpty()){
                 gameUI.showErrorEmptyList();
             }else {

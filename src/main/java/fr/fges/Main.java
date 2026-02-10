@@ -26,8 +26,9 @@ public class Main {
 
         GameCollection collection = new GameCollection(repository);
         Scanner scanner = new Scanner(System.in);
+        GameResearch gameResearch = new GameResearch(repository);
 
-        CommandFactory commandFactory = new CommandFactory(collection, scanner);
+        CommandFactory commandFactory = new CommandFactory(collection, scanner, gameResearch);
         Map<String, Command> commands = commandFactory.createCommands();
 
         Menu menu = new Menu(commands, scanner);

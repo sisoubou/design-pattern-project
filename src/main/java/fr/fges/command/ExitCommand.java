@@ -1,16 +1,15 @@
 package fr.fges.command;
 
 import fr.fges.GameCollection;
+import fr.fges.GameResearch;
 
 import java.util.Scanner;
 
 public class ExitCommand extends InteractiveCommand {
-    public ExitCommand(GameCollection gameCollection, Scanner scanner) {
-        super(gameCollection, scanner);
-    }
 
-    public ExitCommand() {
-        super(null, null);
+
+    protected ExitCommand(GameCollection gameCollection, Scanner scanner, GameResearch gameResearch) {
+        super(gameCollection, scanner, gameResearch);
     }
 
     @Override

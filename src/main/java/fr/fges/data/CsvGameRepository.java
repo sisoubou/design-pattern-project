@@ -14,7 +14,7 @@ public class CsvGameRepository implements GameRepository {
     }
 
     @Override
-    public List<BoardGame> load() {
+    public List<BoardGame> getAll() {
         List<BoardGame> games = new ArrayList<>();
         File file = new File(filePath);
         if (!file.exists()) {
@@ -45,6 +45,19 @@ public class CsvGameRepository implements GameRepository {
     }
 
     @Override
+    public void add(BoardGame game) {
+        List<BoardGame> games = getAll();
+        games.add(game);
+        save(games);
+    }
+
+    @Override
+    public void remove(BoardGame game) {
+        List<BoardGame> games = getAll();
+        games.remove(game);
+        save(games);
+    }
+
     public void save(List<BoardGame> games) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
             writer.write("title,minPlayers,maxPlayers,category");
