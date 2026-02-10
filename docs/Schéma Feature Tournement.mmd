@@ -1,0 +1,75 @@
+classDiagram
+    class Player{
+        -name : String
+        -points : int
+        -wins : int
+        +addWin() void
+        +addLoss() void
+        +getName() String
+        +getPoints() int
+        +getWins() int
+    }
+
+    class Championship{
+        -Players : List~Player~
+        -scanner : Scanner
+        -playTournament() void
+    }
+
+    class KingOfTheHill{
+        -Players : List~Player~
+        -scanner : Scanner
+        +playTournament() void
+    }
+
+    class Match{
+        -player1 : Player
+        -player2 : Player
+        -scanner : Scanner
+        +playMatch() void
+    }
+
+    class Tournament{
+        <<interface>>
+        -Players : List~Player~
+        -scanner : Scanner
+        +playTournament() void
+
+    }
+
+    class TournamentCommand{
+        -gameResearch : GameResearch
+        -gameUI : GameUI
+        -gameCollection : GameCollection
+        -scanner : Scanner
+        -tournament : Tournament
+        +TournamentCommand(gameCollection : GameCollection, scanner : Scanner, gameUI : GameUI, gameResearcher : GameResearcher)
+        +execute() void
+        +getDescription() String
+    }
+
+    class GameResearch{
+        +getAllGamesNumberMatch() List~BoardGame~
+    }
+
+    class GameUI{
+        +showError(msg : String) void
+    }
+
+    class GameCollection{
+        +getGames : List~BoardGame~
+    }
+
+    TournamentCommand ..> GameResearch : uses
+    TournamentCommand ..> GameUI : uses
+    TournamentCommand ..> GameCollection : uses
+    TournamentCommand ..> Tournament : has a
+    TournamentCommand --> Player : creates list
+
+    Tournament <|.. Championship : implements
+    Tournament <|.. KingOfTheHill : implements
+
+    Championship ..> Match : uses
+    KingOfTheHill ..> Match : uses
+
+    Match --> Player : updates score

@@ -63,8 +63,8 @@ classDiagram
     }
 
     class InteractiveCommand {
-        #gameCollection : GameCollection
-        #scanner : Scanner
+        -gameCollection : GameCollection
+        -scanner : Scanner
         +InteractiveCommand(gameCollection : GameCollection, scanner : Scanner)
         +getUserInput(prompt : String) String
     }
