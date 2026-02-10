@@ -61,26 +61,82 @@ classDiagram
         +execute() void
         +getDescription() String
     }
+
     class InteractiveCommand {
         #gameCollection : GameCollection
         #scanner : Scanner
+        +InteractiveCommand(gameCollection : GameCollection, scanner : Scanner)
         +getUserInput(prompt : String) String
     }
-    class AddGameCommand
-    class RemoveGameCommand
-    class ListGameCommand
-    class RecommendGameCommand
-    class SummaryCommand
-    class ExitCommand
-    class UndoCommand
-    class AllGamesNumberMatchCommand
-    class CommandFactory {
-        +createCommands() Map~String, Command~
+
+    class AddGameCommand {
+        -gameUI : GameUI
+        -history : CommandHistory
+        +AddGameCommand(GameCollection, Scanner, CommandHistory)
+        +execute() void
+        +getDescription() String
     }
+    class RemoveGameCommand {
+        -gameUI : GameUI
+        -history : CommandHistory
+        +RemoveGameCommand(GameCollection, Scanner, CommandHistory)
+        +execute() void
+        +getDescription() String
+    }
+    class ListGameCommand {
+        -gameUI : GameUI
+        +ListGameCommand(GameCollection)
+        +execute() void
+        +getDescription() String
+    }
+    class RecommendGameCommand {
+        -gameUI : GameUI
+        +RecommendGameCommand(GameCollection, Scanner)
+        +execute() void
+        +getDescription() String
+    }
+    class SummaryCommand {
+        -gameUI : GameUI
+        +SummaryCommand(GameCollection, Scanner)
+        +execute() void
+        +getDescription() String
+    }
+    class ExitCommand {
+        +ExitCommand(GameCollection, Scanner)
+        +ExitCommand()
+        +execute() void
+        +getDescription() String
+    }
+
+    class AllGamesNumberMatchCommand {
+        -gameUI : GameUI
+        +AllGamesNumberMatchCommand(GameCollection, Scanner)
+        +execute() void
+        +getDescription() String
+    }
+
+    class UndoCommand {
+        -history : CommandHistory
+        -gameUI : GameUI
+        +UndoCommand(GameCollection, Scanner, CommandHistory)
+        +execute() void
+        +getDescription()
+    }
+
     class CommandHistory {
+        -history : Stack~UndoAction~
         +push(action : UndoAction) void
-        +undo(gameUI : GameUI) void
+        +undo(gameUI: GameUI) void
     }
+
+    class CommandFactory {
+        -gameCollection : GameCollection
+        -scanner : Scanner
+        +CommandFactory(gameCollection : GameCollection, scanner : Scanner)
+        +createCommands() Map~String, Command~
+        +isWeekend() boolean
+    }
+
     class UndoAction {
         <<interface>>
         +undo() String
@@ -92,52 +148,58 @@ classDiagram
         -scanner : Scanner
         +Menu(commands : Map~String, Command~, scanner : Scanner)
         +run() void
+        +displayMainMenu() void
     }
     class Main {
         +main(args : String[]) void
     }
 
     %% --- RELATIONS ---
-    JsonGameRepository ..|> GameRepository
-    CsvGameRepository ..|> GameRepository
-    DataFactory --> GameRepository
-    GameCollection --> GameRepository
-    GameCollection o-- BoardGame
-    Menu --> Command
-    Menu --> Scanner
-    Main ..> GameRepository
-    Main ..> GameCollection
-    Main ..> Menu
-    Main ..> CommandFactory
-    CommandFactory --> Command
-    CommandFactory --> GameCollection
-    CommandFactory --> Scanner
-    CommandFactory --> CommandHistory
-    CommandHistory o-- UndoAction
-    UndoCommand --> CommandHistory
-    UndoCommand --> GameUI
-    AddGameCommand --> CommandHistory
-    AddGameCommand --> GameUI
-    RemoveGameCommand --> CommandHistory
-    RemoveGameCommand --> GameUI
-    ListGameCommand --> GameUI
-    RecommendGameCommand --> GameUI
-    SummaryCommand --> GameUI
-    AllGamesNumberMatchCommand --> GameUI
+    JsonGameRepository ..|> GameRepository : implements
+    CsvGameRepository ..|> GameRepository : implements
+    GameCollection --> GameRepository : uses (Dependency Injection)
+    GameCollection o-- BoardGame : contains
+
+    Menu o-- Command : contains
+
+    Main ..> DataFactory : uses
+    DataFactory ..> GameRepository : creates
+    Main ..> CommandFactory : uses
+    CommandFactory ..> Command : creates
+    CommandFactory --> GameCollection : uses
+    Main ..> GameCollection : creates
+    Main ..> Menu : creates
+
+    CommandFactory ..> CommandHistory : creates
+    CommandHistory o-- UndoAction : contains
+    AddGameCommand --> CommandHistory : uses
+    RemoveGameCommand --> CommandHistory : uses
+    UndoCommand --> CommandHistory : uses
+
+    AddGameCommand ..> GameUI : uses
+    RemoveGameCommand ..> GameUI : uses
+    ListGameCommand ..> GameUI : uses
+    RecommendGameCommand ..> GameUI : uses
+    SummaryCommand ..> GameUI : uses
+    ExitCommand ..> GameUI : uses
+    AllGamesNumberMatchCommand ..> GameUI : uses
+    UndoCommand ..> GameUI : uses
+
     InteractiveCommand <|-- AddGameCommand
     InteractiveCommand <|-- RemoveGameCommand
     InteractiveCommand <|-- ListGameCommand
     InteractiveCommand <|-- RecommendGameCommand
     InteractiveCommand <|-- SummaryCommand
     InteractiveCommand <|-- ExitCommand
-    InteractiveCommand <|-- UndoCommand
     InteractiveCommand <|-- AllGamesNumberMatchCommand
+    InteractiveCommand <|-- UndoCommand
+
     Command <|.. InteractiveCommand
     Command <|.. AddGameCommand
     Command <|.. RemoveGameCommand
     Command <|.. ListGameCommand
     Command <|.. RecommendGameCommand
     Command <|.. SummaryCommand
-    Command <|.. ExitCommand
-    Command <|.. UndoCommand
     Command <|.. AllGamesNumberMatchCommand
+    Command <|.. UndoCommand
+    Command <|.. ExitCommand
