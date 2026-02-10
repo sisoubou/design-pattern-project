@@ -2,6 +2,7 @@ package fr.fges.command;
 
 import fr.fges.BoardGame;
 import fr.fges.GameCollection;
+import fr.fges.GameResearch;
 import fr.fges.GameUI;
 
 import java.util.Scanner;
@@ -10,10 +11,11 @@ public class RemoveGameCommand extends InteractiveCommand {
     private final GameUI gameUI = new GameUI();
     private final CommandHistory history;
 
-    public RemoveGameCommand(GameCollection gameCollection, Scanner scanner, CommandHistory history) {
-        super(gameCollection, scanner);
+    protected RemoveGameCommand(GameCollection gameCollection, Scanner scanner, GameResearch gameResearch, CommandHistory history) {
+        super(gameCollection, scanner, gameResearch);
         this.history = history;
     }
+
 
     @Override
     public void execute() {
