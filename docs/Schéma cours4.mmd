@@ -1,0 +1,282 @@
+classDiagram
+    %% --- DATA Layer ---
+        class GameRepository {
+            <<interface>>
+            +getAll() List~BoardGame~
+            +add(game : BoardGame) void
+            +remove(game : BoardGame) void
+        }
+
+        class JsonGameRepository {
+            -filepath : String
+            -mapper : ObjectMapper
+            +JsonGameRepository(filepath : String)
+            +getAll() List~BoardGame~
+            +add(game : BoardGame) void
+            +remove(game : BoardGame) void
+            +save(games : List~BoardGame~) void
+        }
+
+        class CsvGameRepository {
+            -filePath : String
+            +CsvGameRepository(filePath : String)
+            +getAll() List~BoardGame~
+            +add(game : BoardGame) void
+            +remove(game : BoardGame) void
+            +save(games : List~BoardGame~) void
+        }
+
+        class DataFactory {
+            +createRepository(fileName : String) GameRepository
+        }
+
+    %% --- DOMAIN Layer ---
+        class BoardGame {
+            <<record>>
+            +title : String
+            +minPlayers : int
+            +maxPlayers : int
+            +category : String
+        }
+
+        class GameCollection {
+            -gameRepository : GameRepository
+            +GameCollection(gameRepository : GameRepository)
+            +addGame(game : BoardGame) void
+            +removeGame(game : BoardGame) void
+            +getGames() List~BoardGame~
+            +alreadyExist(game : BoardGame) boolean
+        }
+
+        class GameResearch {
+            -gameRepository : GameRepository
+            +GameResearch(gameRepository : GameRepository)
+            +recommendGame(nbPlayer : int) Optional~BoardGame~
+            +getRandomGames(count : int) List~BoardGame~
+            +getAllGamesNumberMatch(nbPlayer : int) List~BoardGame~
+        }
+
+        class GameUI {
+            +showErrorAlreadyExist(title : String) void
+            +showSuccessAddGame(title : String) void
+            +showErrorEmptyList() void
+            +showGame(game : BoardGame) void
+            +showErrorNoMatch() void
+            +showRecommendedGame(game : BoardGame) void
+            +showErrorNotEnoughGames(count : int) void
+            +showList(games : List~BoardGame~) void
+            +showSummary(games : List~BoardGame~) void
+            +showError(msg : String) void
+            +showTournamentResults(players : List~Player~) void
+        }
+
+        class Menu {
+            -commands : Map~String, Command~
+            -scanner : Scanner
+            +Menu(commands : Map~String, Command~, scanner : Scanner)
+            +run() void
+        }
+
+        class Main {
+            +main(args : String[]) void
+        }
+
+    %% --- TOURNAMENT Layer ---
+        class Player {
+            -name : String
+            -points : int
+            -wins : int
+            +addWin() void
+            +addLoss() void
+            +getName() String
+            +getPoints() int
+            +getWins() int
+        }
+
+        class Match {
+            -player1 : Player
+            -player2 : Player
+            -scanner : Scanner
+            +playMatch() void
+        }
+
+        class Tournament {
+            <<interface>>
+            +playTournament(players : List~Player~, scanner : Scanner) void
+        }
+
+        class Championship {
+            -players : List~Player~
+            -scanner : Scanner
+            +playTournament() void
+        }
+
+        class KingOfTheHill {
+            -players : List~Player~
+            -scanner : Scanner
+            +playTournament() void
+        }
+
+    %% --- COMMAND Layer ---
+        class Command {
+            <<interface>>
+            +execute() void
+            +getDescription() String
+        }
+
+        class InteractiveCommand {
+            -gameCollection : GameCollection
+            -scanner : Scanner
+            -gameResearch : GameResearch
+            +InteractiveCommand(gameCollection : GameCollection, scanner : Scanner, gameResearch : GameResearch)
+            +getUserInput(prompt : String) String
+        }
+
+        class AddGameCommand {
+            -gameUI : GameUI
+            -history : CommandHistory
+            +AddGameCommand(GameCollection, Scanner, GameResearch, CommandHistory)
+            +execute() void
+            +getDescription() String
+        }
+
+        class RemoveGameCommand {
+            -gameUI : GameUI
+            -history : CommandHistory
+            +RemoveGameCommand(GameCollection, Scanner, GameResearch, CommandHistory)
+            +execute() void
+            +getDescription() String
+        }
+
+        class ListGameCommand {
+            -gameUI : GameUI
+            +ListGameCommand(GameCollection, Scanner, GameResearch)
+            +execute() void
+            +getDescription() String
+        }
+
+        class RecommendGameCommand {
+            -gameUI : GameUI
+            +RecommendGameCommand(GameCollection, Scanner, GameResearch)
+            +execute() void
+            +getDescription() String
+        }
+
+        class SummaryCommand {
+            -gameUI : GameUI
+            +SummaryCommand(GameCollection, Scanner, GameResearch)
+            +execute() void
+            +getDescription() String
+        }
+
+        class ExitCommand {
+            +ExitCommand(GameCollection, Scanner, GameResearch)
+            +ExitCommand()
+            +execute() void
+            +getDescription() String
+        }
+
+        class AllGamesNumberMatchCommand {
+            -gameUI : GameUI
+            +AllGamesNumberMatchCommand(GameCollection, Scanner, GameResearch)
+            +execute() void
+            +getDescription() String
+        }
+
+        class UndoCommand {
+            -history : CommandHistory
+            -gameUI : GameUI
+            +UndoCommand(GameCollection, Scanner, GameResearch, CommandHistory)
+            +execute() void
+            +getDescription()
+        }
+
+        class CommandHistory {
+            -history : Stack~UndoAction~
+            +push(action : UndoAction) void
+            +undo(gameUI: GameUI) void
+        }
+
+        class CommandFactory {
+            -gameCollection : GameCollection
+            -scanner : Scanner
+            -gameResearch : GameResearch
+            +CommandFactory(gameCollection : GameCollection, scanner : Scanner, gameResearch : GameResearch)
+            +createCommands() Map~String, Command~
+            +isWeekend() boolean
+        }
+
+        class UndoAction {
+            <<interface>>
+            +undo() String
+        }
+
+        class TournamentCommand {
+            -gameResearch : GameResearch
+            -gameUI : GameUI
+            -scanner : Scanner
+            -tournament : Tournament
+            +TournamentCommand(gameResearch : GameResearch, scanner : Scanner, gameUI : GameUI, tournament : Tournament)
+            +execute() void
+            +getDescription() String
+        }
+
+%% --- RELATIONS ---
+
+%% Data Implementation
+    JsonGameRepository ..|> GameRepository : implements
+    CsvGameRepository ..|> GameRepository : implements
+    DataFactory ..> GameRepository : creates
+
+%% Domain Dependencies
+    GameCollection --> GameRepository : uses
+    GameResearch --> GameRepository : uses
+    GameCollection o-- BoardGame : manages
+    Main ..> DataFactory : uses
+    Main ..> CommandFactory : uses
+    Main ..> GameCollection : creates
+    Main ..> Menu : creates
+
+%% Command Hierarchy
+    InteractiveCommand ..|> Command : implements
+    AddGameCommand --|> InteractiveCommand : extends
+    RemoveGameCommand --|> InteractiveCommand : extends
+    ListGameCommand --|> InteractiveCommand : extends
+    RecommendGameCommand --|> InteractiveCommand : extends
+    SummaryCommand --|> InteractiveCommand : extends
+    ExitCommand --|> InteractiveCommand : extends
+    AllGamesNumberMatchCommand --|> InteractiveCommand : extends
+    UndoCommand --|> InteractiveCommand : extends
+    TournamentCommand --|> InteractiveCommand : extends
+
+%% Command Factory & Menu
+    CommandFactory ..> Command : creates
+    CommandFactory ..> CommandHistory : creates
+    CommandFactory --> GameCollection : uses
+    Menu o-- Command : contains
+
+%% Undo Logic
+    CommandHistory o-- UndoAction : contains
+    AddGameCommand --> CommandHistory : uses
+    RemoveGameCommand --> CommandHistory : uses
+    UndoCommand --> CommandHistory : uses
+
+%% UI Dependencies
+    AddGameCommand ..> GameUI : uses
+    RemoveGameCommand ..> GameUI : uses
+    ListGameCommand ..> GameUI : uses
+    RecommendGameCommand ..> GameUI : uses
+    SummaryCommand ..> GameUI : uses
+    AllGamesNumberMatchCommand ..> GameUI : uses
+    UndoCommand ..> GameUI : uses
+    TournamentCommand ..> GameUI : uses
+
+%% Tournament Strategy
+    TournamentCommand --> Tournament : has a
+    TournamentCommand ..> GameResearch : uses
+    TournamentCommand --> Player : creates list
+    Tournament <|.. Championship : implements
+    Tournament <|.. KingOfTheHill : implements
+    Championship ..> Match : uses
+    KingOfTheHill ..> Match : uses
+    Match --> Player : updates score
