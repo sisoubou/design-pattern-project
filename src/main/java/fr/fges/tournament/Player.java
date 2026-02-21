@@ -34,6 +34,7 @@ public class Player {
 
     @Override
     public String toString() {
-        return name + " - " + points + " points (" + wins + "wins)";
+        String winsText = wins == 1 ? "win" : "wins";
+        return name + " - " + points + " points (" + wins + " " + winsText + ")";
     }
 }

@@ -23,6 +23,6 @@ public class UndoCommand extends InteractiveCommand {
 
     @Override
     public String getDescription() {
-        return "Undo Last Action:";
+        return "Undo Last Action";
     }
 }

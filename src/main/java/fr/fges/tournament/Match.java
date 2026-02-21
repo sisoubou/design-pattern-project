@@ -1,30 +1,31 @@
 package fr.fges.tournament;
 
+import fr.fges.GameUI;
 import java.util.Scanner;
 
 public class Match {
     private final Player player1;
     private final Player player2;
     private final Scanner scanner;
+    private final GameUI gameUI;
 
-    public Match(Player player1, Player player2, Scanner scanner) {
+    public Match(Player player1, Player player2, Scanner scanner, GameUI gameUI) {
         this.player1 = player1;
         this.player2 = player2;
         this.scanner = scanner;
+        this.gameUI = gameUI;
     }
 
     public Player playMatch() {
-        System.out.println(player1.getName() + " vs " + player2.getName());
-
         int winner = -1;
         while (winner != 1 && winner != 2) {
-            System.out.println("Winner (1=" + player1.getName() + "2=" + player2.getName() + "): ");
+            gameUI.showWinnerPrompt(player1.getName(), player2.getName());
             String input = scanner.nextLine();
 
             try {
                 winner = Integer.parseInt(input);
             } catch (NumberFormatException e) {
-                System.out.println("Invalid input. Please enter a number.");
+                gameUI.showInvalidPlayerInput();
             }
         }
 
@@ -37,6 +38,5 @@ public class Match {
             player1.addLoss();
             return player2;
         }
-
     }
 }

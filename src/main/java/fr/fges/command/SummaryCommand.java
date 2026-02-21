@@ -33,6 +33,6 @@ public class SummaryCommand extends InteractiveCommand {
 
     @Override
     public String getDescription() {
-        return "Summary (Weekend Special!)";
+        return "View Summary (Weekend Special!)";
     }
 }

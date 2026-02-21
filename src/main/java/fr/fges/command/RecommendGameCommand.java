@@ -30,6 +30,6 @@ public class RecommendGameCommand extends InteractiveCommand {
 
     @Override
     public String getDescription() {
-        return "Recommend Board Game";
+        return "Recommend Game";
     }
 }

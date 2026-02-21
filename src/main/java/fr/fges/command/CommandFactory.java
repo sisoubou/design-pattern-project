@@ -33,12 +33,14 @@ public class CommandFactory {
             commands.put("5", new SummaryCommand(gameCollection, scanner, gameResearch));
             commands.put("6", new UndoCommand(gameCollection, scanner, gameResearch, history));
             commands.put("7", new AllGamesNumberMatchCommand(gameCollection, scanner, gameResearch));
-            commands.put("8", new ExitCommand(null, null, null));
+            commands.put("8", new TournamentCommand(gameCollection, scanner, gameResearch));
+            commands.put("9", new ExitCommand(null, null, null));
             return commands;
         }else {
             commands.put("5", new UndoCommand(gameCollection, scanner, gameResearch, history));
             commands.put("6", new AllGamesNumberMatchCommand(gameCollection, scanner, gameResearch));
-            commands.put("7", new ExitCommand(null, null, null));
+            commands.put("7", new TournamentCommand(gameCollection, scanner, gameResearch));
+            commands.put("8", new ExitCommand(null, null, null));
             return commands;
         }
     }
