@@ -1,75 +1,40 @@
-package fr.fges.samplecode;
+package fr.fges.command;
 
 import fr.fges.BoardGame;
 import fr.fges.GameCollection;
 import fr.fges.data.GameRepository;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
-
-class   AddGameTest {
-
+class AddGameTest {
 
     @Test
-    void addGame_addsAndSaves() {
+    void addGame_addsToRepository() {
         GameRepository mockRepo = Mockito.mock(GameRepository.class);
-        Mockito.when(mockRepo.load()).thenReturn(new ArrayList<>());
+        Mockito.when(mockRepo.getAll()).thenReturn(new ArrayList<>());
         GameCollection collection = new GameCollection(mockRepo);
         BoardGame game = new BoardGame("Catan", 3, 4, "Board");
+
         collection.addGame(game);
-        verify(mockRepo, times(1)).save(anyList());
-        assertEquals(1, collection.getGames().size());
+
+        verify(mockRepo, times(1)).add(game);
     }
 
     @Test
-    void addGame_duplicateDoesNotAdd() {
+    void addGame_duplicateThrowsException() {
         GameRepository mockRepo = Mockito.mock(GameRepository.class);
-        Mockito.when(mockRepo.load()).thenReturn(new ArrayList<>());
-        GameCollection collection = new GameCollection(mockRepo);
         BoardGame game = new BoardGame("Uno", 2, 10, "Card");
-        collection.addGame(game);
-        collection.addGame(new BoardGame("Uno", 2, 10, "Card"));
-        verify(mockRepo, times(1)).save(anyList());
-        assertEquals(1, collection.getGames().size());
-    }
-
-    @Test
-    void addGame_onNonEmptyCollection() {
-        List<BoardGame> initial = new ArrayList<>();
-        initial.add(new BoardGame("Monopoly", 2, 6, "Board"));
-        GameRepository mockRepo = Mockito.mock(GameRepository.class);
-        Mockito.when(mockRepo.load()).thenReturn(initial);
-        GameCollection collection = new GameCollection(mockRepo);
-        BoardGame game = new BoardGame("Catan", 3, 4, "Board");
-        collection.addGame(game);
-        verify(mockRepo, times(1)).save(anyList());
-        assertEquals(2, collection.getGames().size());
-    }
-
-    @Test
-    void addGame_duplicate_doesNotSaveAgain() {
-        GameRepository mockRepo = Mockito.mock(GameRepository.class);
-        Mockito.when(mockRepo.load()).thenReturn(new ArrayList<>());
-
+        Mockito.when(mockRepo.getAll()).thenReturn(List.of(game));
         GameCollection collection = new GameCollection(mockRepo);
 
-        BoardGame first = new BoardGame("Uno", 2, 10, "Card");
-        collection.addGame(first);
+        assertThrows(IllegalArgumentException.class, () -> collection.addGame(game));
 
-        BoardGame duplicate = new BoardGame("Uno", 2, 10, "Card");
-        collection.addGame(duplicate);
-
-        verify(mockRepo, times(1)).save(anyList());
-        assertEquals(1, collection.getGames().size());
+        verify(mockRepo, never()).add(any());
     }
 }
