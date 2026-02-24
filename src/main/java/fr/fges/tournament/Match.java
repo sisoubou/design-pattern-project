@@ -25,7 +25,7 @@ public class Match {
             try {
                 winner = Integer.parseInt(input);
             } catch (NumberFormatException e) {
-                gameUI.showInvalidPlayerInput();
+                gameUI.showError("Invalid input. Please enter a number.");
             }
         }
 

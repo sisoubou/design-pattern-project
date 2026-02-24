@@ -78,10 +78,6 @@ public class GameUI {
         System.out.print("Winner (1=" + player1 + ", 2=" + player2 + "): ");
     }
 
-    public void showInvalidPlayerInput() {
-        System.out.println("Invalid input. Please enter a number.");
-    }
-
     public void showKingRemains(String playerName) {
         System.out.println(playerName + " remains the King of the Hill!");
     }
