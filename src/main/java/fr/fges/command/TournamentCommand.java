@@ -25,7 +25,6 @@ public class TournamentCommand extends InteractiveCommand {
         try {
             gameUI.showTournamentModeHeader();
 
-            // Display available 2-player games
             List<BoardGame> availableGames;
             try {
                 availableGames = gameResearch.getAllGamesNumberMatch(2);
@@ -36,7 +35,6 @@ public class TournamentCommand extends InteractiveCommand {
 
             gameUI.showAvailable2PlayerGames(availableGames);
 
-            // Select game
             String gameChoice = getUserInput("Select game (1-" + availableGames.size() + ")");
             int gameIndex;
             try {
@@ -50,7 +48,6 @@ public class TournamentCommand extends InteractiveCommand {
                 return;
             }
 
-            // Get number of participants (3-8)
             String nbParticipantsStr = getUserInput("Number of participants (3-8)");
             int nbParticipants;
             try {
@@ -64,14 +61,12 @@ public class TournamentCommand extends InteractiveCommand {
                 return;
             }
 
-            // Create players
             List<Player> players = new ArrayList<>();
             for (int i = 0; i < nbParticipants; i++) {
                 String playerName = getUserInput("Enter player " + (i + 1) + " name");
                 players.add(new Player(playerName));
             }
 
-            // Choose tournament format
             gameUI.showChooseTournamentFormat();
             String formatChoice = getUserInput("Select format (1-2)");
 
@@ -85,10 +80,8 @@ public class TournamentCommand extends InteractiveCommand {
                 tournament = new Championship(gameUI);
             }
 
-            // Play tournament
             tournament.playTournament(players, scanner);
 
-            // Display results
             gameUI.showTournamentResults(players);
 
         } catch (Exception e) {

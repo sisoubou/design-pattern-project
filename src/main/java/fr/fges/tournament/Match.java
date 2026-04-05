@@ -16,7 +16,7 @@ public class Match {
         this.gameUI = gameUI;
     }
 
-    public Player playMatch() {
+    public Player playMatch()  {
         int winner = -1;
         while (winner != 1 && winner != 2) {
             gameUI.showWinnerPrompt(player1.getName(), player2.getName());

@@ -15,7 +15,6 @@ public class UndoCommand extends InteractiveCommand {
         this.history = history;
     }
 
-
     @Override
     public void execute() {
         history.undo(gameUI);
