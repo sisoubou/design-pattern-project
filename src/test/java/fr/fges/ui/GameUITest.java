@@ -52,13 +52,14 @@ class GameUITest {
 
     @Test
     void showTournamentResultsSortsPlayersByPoints() throws Exception {
+        TournamentView tournamentView = new TournamentView();
         Player alice = new Player("Alice");
         Player bob = new Player("Bob");
         invoke(playerMethod("addWin"), alice, 2);
         invoke(playerMethod("addWin"), bob, 1);
 
         try (ConsoleCapture capture = new ConsoleCapture()) {
-            gameUI.showTournamentResults(List.of(bob, alice));
+            tournamentView.showTournamentResults(List.of(bob, alice));
 
             String stdout = capture.stdout();
             assertTrue(stdout.indexOf("1. Alice - 6 points (2 wins)") < stdout.indexOf("2. Bob - 3 points (1 win)"));

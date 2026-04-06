@@ -2,7 +2,7 @@ package fr.fges.command;
 
 import fr.fges.business.BoardGame;
 import fr.fges.business.GetAllGamesNumberMatchLogic;
-import fr.fges.ui.GameUI;
+import fr.fges.ui.TournamentView;
 import fr.fges.ui.TournamentUI;
 import fr.fges.tournament.Championship;
 import fr.fges.tournament.KingOfTheHill;
@@ -16,7 +16,7 @@ import java.util.List;
 public class TournamentCommand implements Command {
     private final GetAllGamesNumberMatchLogic getAllGamesNumberMatchLogic;
     private final UserInput userInput;
-    private final GameUI gameUI = new GameUI();
+    private final TournamentView tournamentView = new TournamentView();
 
     public TournamentCommand(GetAllGamesNumberMatchLogic getAllGamesNumberMatchLogic, UserInput userInput) {
         this.getAllGamesNumberMatchLogic = getAllGamesNumberMatchLogic;
@@ -26,28 +26,28 @@ public class TournamentCommand implements Command {
     @Override
     public void execute() {
         try {
-            gameUI.showTournamentModeHeader();
+            tournamentView.showTournamentModeHeader();
 
             List<BoardGame> availableGames;
             try {
                 availableGames = getAllGamesNumberMatchLogic.getAllGamesNumberMatch(2);
             } catch (IllegalArgumentException e) {
-                gameUI.showError("No games available for 2 players. Cannot organize a tournament.");
+                tournamentView.showError("No games available for 2 players. Cannot organize a tournament.");
                 return;
             }
 
-            gameUI.showAvailable2PlayerGames(availableGames);
+            tournamentView.showAvailable2PlayerGames(availableGames);
 
             String gameChoice = userInput.getUserInput("Select game (1-" + availableGames.size() + ")");
             int gameIndex;
             try {
                 gameIndex = Integer.parseInt(gameChoice) - 1;
                 if (gameIndex < 0 || gameIndex >= availableGames.size()) {
-                    gameUI.showError("Invalid game selection.");
+                    tournamentView.showError("Invalid game selection.");
                     return;
                 }
             } catch (NumberFormatException e) {
-                gameUI.showError("Invalid input. Please enter a number.");
+                tournamentView.showError("Invalid input. Please enter a number.");
                 return;
             }
 
@@ -56,11 +56,11 @@ public class TournamentCommand implements Command {
             try {
                 nbParticipants = Integer.parseInt(nbParticipantsStr);
                 if (nbParticipants < 3 || nbParticipants > 8) {
-                    gameUI.showError("Number of participants must be between 3 and 8.");
+                    tournamentView.showError("Number of participants must be between 3 and 8.");
                     return;
                 }
             } catch (NumberFormatException e) {
-                gameUI.showError("Invalid input. Please enter a number.");
+                tournamentView.showError("Invalid input. Please enter a number.");
                 return;
             }
 
@@ -70,24 +70,24 @@ public class TournamentCommand implements Command {
                 players.add(new Player(playerName));
             }
 
-            gameUI.showChooseTournamentFormat();
+            tournamentView.showChooseTournamentFormat();
             String formatChoice = userInput.getUserInput("Select format (1-2)");
 
             TournamentUI tournamentUI = new TournamentUI() {
                 @Override
                 public void onMatchStart(int currentMatch, int totalMatches, String player1, String player2) {
-                    gameUI.showMatchHeader(currentMatch, totalMatches);
-                    gameUI.showMatchup(player1, player2);
+                    tournamentView.showMatchHeader(currentMatch, totalMatches);
+                    tournamentView.showMatchup(player1, player2);
                 }
 
                 @Override
                 public void onKingRemains(String playerName) {
-                    gameUI.showKingRemains(playerName);
+                    tournamentView.showKingRemains(playerName);
                 }
 
                 @Override
                 public void onNewKing(String playerName) {
-                    gameUI.showNewKing(playerName);
+                    tournamentView.showNewKing(playerName);
                 }
             };
 
@@ -97,16 +97,16 @@ public class TournamentCommand implements Command {
             } else if ("2".equals(formatChoice)) {
                 tournament = new KingOfTheHill();
             } else {
-                gameUI.showError("Invalid format. Using Championship by default.");
+                tournamentView.showError("Invalid format. Using Championship by default.");
                 tournament = new Championship();
             }
 
             tournament.playTournament(players, userInput, tournamentUI);
 
-            gameUI.showTournamentResults(players);
+            tournamentView.showTournamentResults(players);
 
         } catch (Exception e) {
-            gameUI.showError("An error occurred: " + e.getMessage());
+            tournamentView.showError("An error occurred: " + e.getMessage());
         }
     }
 

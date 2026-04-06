@@ -183,7 +183,7 @@ classDiagram
     class TournamentCommand {
         -getAllGamesNumberMatchLogic : GetAllGamesNumberMatchLogic
         -userInput : UserInput
-        -gameUI : GameUI
+        -tournamentView : TournamentView
         +TournamentCommand(getAllGamesNumberMatchLogic : GetAllGamesNumberMatchLogic, userInput : UserInput)
         +execute() void
         +getDescription() String
@@ -207,6 +207,9 @@ classDiagram
         +showList(games : List~BoardGame~) void
         +showSummary(games : List~BoardGame~) void
         +showError(message : String) void
+    }
+
+    class TournamentView {
         +showTournamentModeHeader() void
         +showAvailable2PlayerGames(games : List~BoardGame~) void
         +showChooseTournamentFormat() void
@@ -216,6 +219,7 @@ classDiagram
         +showKingRemains(playerName : String) void
         +showNewKing(playerName : String) void
         +showTournamentResults(players : List~Player~) void
+        +showError(message : String) void
     }
 
     class UserInput {
@@ -335,13 +339,14 @@ classDiagram
     AllGamesNumberMatchCommand --> GameUI : displays
     TournamentCommand --> GetAllGamesNumberMatchLogic : filters
     TournamentCommand --> UserInput : reads
-    TournamentCommand --> GameUI : displays
+    TournamentCommand --> TournamentView : displays
     TournamentCommand --> TournamentUI : creates
     TournamentCommand --> Tournament : selects
 
     Menu --> Command : executes
     GameUI --> BoardGame : renders
-    GameUI --> Player : renders
+    TournamentView --> BoardGame : renders
+    TournamentView --> Player : renders
 
     Championship ..|> Tournament : implements
     KingOfTheHill ..|> Tournament : implements
