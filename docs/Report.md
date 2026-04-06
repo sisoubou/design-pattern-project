@@ -25,8 +25,6 @@ We also created new factories, including CommandFactory and DataFactory.
 Additionally, we improved the code structure by organizing it into new packages.
 
 
-composition au lieu d'heritage piur les commandes getuserinput static genre une class userinput -> trop compliquer 
-gestion de l'historique -> parti ui qui dit ce qui devrait plutot etre dans gamecollection (partie business)
 menu -> faire une liste au lieu de map ce qui permet de ne pas mettre deux if faire un for pour l'affichage 
 enlever les logs pas utiles -> mettre pluto des erreurs log dans data 
 tournoi -> 

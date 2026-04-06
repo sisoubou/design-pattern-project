@@ -2,12 +2,14 @@ package fr.fges.samplecode;
 
 import fr.fges.Menu;
 import fr.fges.GameCollection;
-import fr.fges.data.GameRepository;
+import fr.fges.GameResearch;
+import fr.fges.command.CommandFactory;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.Collections;
+import java.util.Scanner;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -23,7 +25,10 @@ class MenuDisplayTests {
         GameRepository mockRepo = mock(GameRepository.class);
         when(mockRepo.load()).thenReturn(Collections.emptyList());
         GameCollection mockCollection = new GameCollection(mockRepo);
-        Menu menu = new Menu(mockCollection);
+        GameResearch mockResearch = new GameResearch(mockRepo);
+        Scanner scanner = new Scanner(System.in);
+        CommandFactory factory = new CommandFactory(mockCollection, scanner, mockResearch);
+        Menu menu = new Menu(factory.createCommands(), scanner);
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         PrintStream old = System.out;
         System.setOut(new PrintStream(out));
@@ -46,7 +51,10 @@ class MenuDisplayTests {
         GameRepository mockRepo = mock(GameRepository.class);
         when(mockRepo.load()).thenReturn(Collections.emptyList());
         GameCollection mockCollection = new GameCollection(mockRepo);
-        Menu menu = new Menu(mockCollection);
+        GameResearch mockResearch = new GameResearch(mockRepo);
+        Scanner scanner = new Scanner(System.in);
+        CommandFactory factory = new CommandFactory(mockCollection, scanner, mockResearch);
+        Menu menu = new Menu(factory.createCommands(), scanner);
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         PrintStream old = System.out;
         System.setOut(new PrintStream(out));
