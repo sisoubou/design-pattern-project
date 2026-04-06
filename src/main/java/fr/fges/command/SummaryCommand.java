@@ -26,7 +26,7 @@ public class SummaryCommand implements Command {
                 gameUI.showSummary(randomGames);
             }
         } catch (IllegalArgumentException e) {
-            gameUI.showErrorNotEnoughGames(Integer.valueOf(String.valueOf(e)));
+            gameUI.showErrorNotEnoughGames(Integer.parseInt(e.getMessage()));
         }
     }
 
