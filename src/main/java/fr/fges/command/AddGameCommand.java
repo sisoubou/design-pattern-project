@@ -8,12 +8,10 @@ public class AddGameCommand implements Command {
     private final GameCollection gameCollection;
     private final UserInput userInput;
     private final GameUI gameUI = new GameUI();
-    private final CommandHistory history;
 
-    public AddGameCommand(GameCollection gameCollection, UserInput userInput, CommandHistory history) {
+    public AddGameCommand(GameCollection gameCollection, UserInput userInput) {
         this.gameCollection = gameCollection;
         this.userInput = userInput;
-        this.history = history;
     }
 
 
@@ -32,10 +30,6 @@ public class AddGameCommand implements Command {
             gameCollection.addGame(game);
             gameUI.showSuccessAddGame(title);
 
-            history.push(() -> {
-                gameCollection.removeGame(game);
-                return "Removed \"" + game.title() + "\" from collection.";
-            });
         } catch (IllegalArgumentException e) {
             gameUI.showErrorAlreadyExist(title);
         }

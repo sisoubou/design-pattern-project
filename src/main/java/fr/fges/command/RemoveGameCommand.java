@@ -8,12 +8,10 @@ public class RemoveGameCommand implements Command {
     private final GameCollection gameCollection;
     private final UserInput userInput;
     private final GameUI gameUI = new GameUI();
-    private final CommandHistory history;
 
-    public RemoveGameCommand(GameCollection gameCollection, UserInput userInput, CommandHistory history) {
+    public RemoveGameCommand(GameCollection gameCollection, UserInput userInput) {
         this.gameCollection = gameCollection;
         this.userInput = userInput;
-        this.history = history;
     }
 
 
@@ -26,15 +24,6 @@ public class RemoveGameCommand implements Command {
             if (game.title().equals(title)) {
                 gameCollection.removeGame(game);
                 System.out.println("Board game removed successfully.");
-
-                history.push(() -> {
-                    try {
-                        gameCollection.addGame(game);
-                        return "Added \"" + game.title() + "\" back to the collection";
-                    } catch (Exception e) {
-                        return "Error restoring " + game.title();
-                    }
-                });
 
                 return;
             }

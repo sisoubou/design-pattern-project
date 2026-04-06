@@ -1,18 +1,24 @@
 package fr.fges.command;
 
+import fr.fges.GameCollection;
 import fr.fges.GameUI;
 
 public class UndoCommand implements Command {
-    private final CommandHistory history;
+    private final GameCollection gameCollection;
     private final GameUI gameUI = new GameUI();
 
-    public UndoCommand(CommandHistory history) {
-        this.history = history;
+    public UndoCommand(GameCollection gameCollection) {
+        this.gameCollection = gameCollection;
     }
 
     @Override
     public void execute() {
-        history.undo(gameUI);
+        try {
+            String resultMessage = gameCollection.undo();
+            System.out.println("Undone : " + resultMessage);
+        } catch (IllegalArgumentException e) {
+            gameUI.showError(e.getMessage());
+        }
     }
 
     @Override
