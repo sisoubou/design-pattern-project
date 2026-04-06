@@ -19,7 +19,7 @@ public class GameCollection {
             gameRepository.add(game);
             history.push(() -> {
                 gameRepository.remove(game);
-                return "Removed \\\"\" + game.title() + \"\\\" from collection.";
+                return "Removed " + game.title() + " from collection.";
             });
         }
     }
@@ -28,7 +28,7 @@ public class GameCollection {
         gameRepository.remove(game);
         history.push(() -> {
             gameRepository.add(game);
-            return "Added \\\"\" + game.title() + \"\\\" back to the collection.";
+            return "Added " + game.title() + " back to the collection.";
         });
     }
 
