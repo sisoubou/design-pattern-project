@@ -1,26 +1,26 @@
 package fr.fges.command;
 
 import fr.fges.business.BoardGame;
-import fr.fges.business.GameCollection;
+import fr.fges.business.RemoveGameLogic;
 import fr.fges.ui.UserInput;
 
 public class RemoveGameCommand implements Command {
-    private final GameCollection gameCollection;
+    private final RemoveGameLogic removeGameLogic;
     private final UserInput userInput;
 
-    public RemoveGameCommand(GameCollection gameCollection, UserInput userInput) {
-        this.gameCollection = gameCollection;
+    public RemoveGameCommand(RemoveGameLogic removeGameLogic, UserInput userInput) {
+        this.removeGameLogic = removeGameLogic;
         this.userInput = userInput;
     }
 
     @Override
     public void execute() {
         String title = userInput.getUserInput("Title of game to remove");
-        var games = gameCollection.getGames();
+        var games = removeGameLogic.getGames();
 
         for (BoardGame game : games) {
             if (game.title().equals(title)) {
-                gameCollection.removeGame(game);
+                removeGameLogic.removeGame(game);
                 System.out.println("Board game removed successfully.");
 
                 return;

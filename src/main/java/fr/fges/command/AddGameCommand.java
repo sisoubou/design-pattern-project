@@ -1,17 +1,17 @@
 package fr.fges.command;
 
 import fr.fges.business.BoardGame;
-import fr.fges.business.GameCollection;
+import fr.fges.business.AddGameLogic;
 import fr.fges.ui.GameUI;
 import fr.fges.ui.UserInput;
 
 public class AddGameCommand implements Command {
-    private final GameCollection gameCollection;
+    private final AddGameLogic addGameLogic;
     private final UserInput userInput;
     private final GameUI gameUI = new GameUI();
 
-    public AddGameCommand(GameCollection gameCollection, UserInput userInput) {
-        this.gameCollection = gameCollection;
+    public AddGameCommand(AddGameLogic addGameLogic, UserInput userInput) {
+        this.addGameLogic = addGameLogic;
         this.userInput = userInput;
     }
 
@@ -28,7 +28,7 @@ public class AddGameCommand implements Command {
             int maxPlayers = Integer.parseInt(maxPlayersStr);
             BoardGame game = new BoardGame(title, minPlayers, maxPlayers, category);
 
-            gameCollection.addGame(game);
+            addGameLogic.addGame(game);
             gameUI.showSuccessAddGame(title);
 
         } catch (IllegalArgumentException e) {

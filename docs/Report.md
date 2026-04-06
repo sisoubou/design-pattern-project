@@ -24,14 +24,8 @@ This week, we implemented two new features: undoing the last action and listing 
 We also created new factories, including CommandFactory and DataFactory.
 Additionally, we improved the code structure by organizing it into new packages.
 
-
-tournament command -> bonne idee les deux classes mais enelever l'ui dans les tournoi notammenet methodes prive mais pas d'ui peut petre ajouter des classes 
-faire un catch au lieu showerror dans championnish au debut et pareil dans l'autre 
-recouper encore gamecollection et gameresearch -> decoupage encore plus -> faire un package business 
+package business 
 package -> reorganiser encore plus notamment les menu et les commandes 
-
-tournoi -> scanner dans l'ui,  faire gaffe au layer 
-soit sortir la partie ui 
 
 test -> architecture miroir du src et tester dedans chaque comportement (erreur succes etc)
 

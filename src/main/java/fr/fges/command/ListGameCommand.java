@@ -1,19 +1,19 @@
 package fr.fges.command;
 
-import fr.fges.business.GameCollection;
+import fr.fges.business.ViewAllGamesLogic;
 import fr.fges.ui.GameUI;
 
 public class ListGameCommand implements Command {
-    private final GameCollection gameCollection;
+    private final ViewAllGamesLogic viewAllGamesLogic;
     public final GameUI gameUI = new GameUI();
 
-    public ListGameCommand(GameCollection gameCollection) {
-        this.gameCollection = gameCollection;
+    public ListGameCommand(ViewAllGamesLogic viewAllGamesLogic) {
+        this.viewAllGamesLogic = viewAllGamesLogic;
     }
 
     @Override
     public void execute() {
-        var games = gameCollection.viewAllGames();
+        var games = viewAllGamesLogic.viewAllGames();
         gameUI.showList(games);
     }
 

@@ -1,7 +1,7 @@
 package fr.fges.command;
 
 import fr.fges.business.BoardGame;
-import fr.fges.business.GameResearch;
+import fr.fges.business.GetAllGamesNumberMatchLogic;
 import fr.fges.ui.GameUI;
 import fr.fges.ui.TournamentUI;
 import fr.fges.tournament.Championship;
@@ -14,12 +14,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TournamentCommand implements Command {
-    private final GameResearch gameResearch;
+    private final GetAllGamesNumberMatchLogic getAllGamesNumberMatchLogic;
     private final UserInput userInput;
     private final GameUI gameUI = new GameUI();
 
-    public TournamentCommand(GameResearch gameResearch, UserInput userInput) {
-        this.gameResearch = gameResearch;
+    public TournamentCommand(GetAllGamesNumberMatchLogic getAllGamesNumberMatchLogic, UserInput userInput) {
+        this.getAllGamesNumberMatchLogic = getAllGamesNumberMatchLogic;
         this.userInput = userInput;
     }
 
@@ -30,7 +30,7 @@ public class TournamentCommand implements Command {
 
             List<BoardGame> availableGames;
             try {
-                availableGames = gameResearch.getAllGamesNumberMatch(2);
+                availableGames = getAllGamesNumberMatchLogic.getAllGamesNumberMatch(2);
             } catch (IllegalArgumentException e) {
                 gameUI.showError("No games available for 2 players. Cannot organize a tournament.");
                 return;

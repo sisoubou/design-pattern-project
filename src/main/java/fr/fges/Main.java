@@ -1,7 +1,6 @@
 package fr.fges;
 
-import fr.fges.business.GameCollection;
-import fr.fges.business.GameResearch;
+import fr.fges.business.GameHistory;
 import fr.fges.command.Command;
 import fr.fges.command.CommandFactory;
 import fr.fges.data.DataFactory;
@@ -24,11 +23,10 @@ public class Main {
 
         System.out.println("Using storage file: " + fileName);
 
-        GameCollection collection = new GameCollection(repository);
+        GameHistory gameHistory = new GameHistory();
         Scanner scanner = new Scanner(System.in);
-        GameResearch gameResearch = new GameResearch(repository);
 
-        CommandFactory commandFactory = new CommandFactory(collection, scanner, gameResearch);
+        CommandFactory commandFactory = new CommandFactory(repository, gameHistory, scanner);
         List<Command> commands = commandFactory.createCommands();
 
         Menu menu = new Menu(commands, scanner);

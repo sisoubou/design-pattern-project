@@ -1,16 +1,17 @@
 package fr.fges.command;
 
 import fr.fges.business.BoardGame;
-import fr.fges.business.GameResearch;
+import fr.fges.business.GetRandomGamesLogic;
 import fr.fges.ui.GameUI;
 
 import java.util.List;
+
 public class SummaryCommand implements Command {
-    private final GameResearch gameResearch;
+    private final GetRandomGamesLogic getRandomGamesLogic;
     public final GameUI gameUI = new GameUI();
 
-    public SummaryCommand(GameResearch gameResearch) {
-        this.gameResearch = gameResearch;
+    public SummaryCommand(GetRandomGamesLogic getRandomGamesLogic) {
+        this.getRandomGamesLogic = getRandomGamesLogic;
     }
 
 
@@ -18,7 +19,7 @@ public class SummaryCommand implements Command {
     public void execute() {
 
         try {
-            List<BoardGame> randomGames= gameResearch.getRandomGames(3);
+            List<BoardGame> randomGames= getRandomGamesLogic.getRandomGames(3);
             if(randomGames.isEmpty()){
                 gameUI.showErrorEmptyList();
             }else {
