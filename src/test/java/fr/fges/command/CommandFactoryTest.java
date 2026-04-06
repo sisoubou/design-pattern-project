@@ -12,7 +12,6 @@ import java.util.Scanner;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class CommandFactoryTest {
     @Test
@@ -20,8 +19,7 @@ class CommandFactoryTest {
         CommandFactory factory = new CommandFactory(
                 new InMemoryGameRepository(),
                 new GameHistory(),
-                new Scanner("")
-        );
+                new Scanner(""));
 
         List<Command> commands = factory.createCommands();
         boolean weekend = LocalDate.now().getDayOfWeek() == DayOfWeek.SATURDAY

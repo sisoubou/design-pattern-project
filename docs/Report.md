@@ -20,12 +20,5 @@ We also implemented three new features: prevention of duplicate games in the col
 
 ## Week 3
 
-This week, we implemented two new features: undoing the last action and listing games for a specific number of players.
-We also created new factories, including CommandFactory and DataFactory.
-Additionally, we improved the code structure by organizing it into new packages.
-
-package business 
-package -> reorganiser encore plus notamment les menu et les commandes 
-
 test -> architecture miroir du src et tester dedans chaque comportement (erreur succes etc)
 
