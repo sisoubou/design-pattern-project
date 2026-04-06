@@ -1,0 +1,352 @@
+classDiagram
+    direction TB
+
+    %% App
+    class Main {
+        +main(args : String[]) void
+    }
+
+    %% Business
+    class BoardGame {
+        <<record>>
+        +title : String
+        +minPlayers : int
+        +maxPlayers : int
+        +category : String
+    }
+
+    class UndoAction {
+        <<interface>>
+        +undo() String
+    }
+
+    class GameHistory {
+        -history : Stack~UndoAction~
+        +push(action : UndoAction) void
+        +pop() UndoAction
+        +isEmpty() boolean
+    }
+
+    class AddGameLogic {
+        -gameRepository : GameRepository
+        -history : GameHistory
+        +AddGameLogic(gameRepository : GameRepository, history : GameHistory)
+        +addGame(game : BoardGame) void
+        +alreadyExist(newGame : BoardGame) boolean
+    }
+
+    class RemoveGameLogic {
+        -gameRepository : GameRepository
+        -history : GameHistory
+        +RemoveGameLogic(gameRepository : GameRepository, history : GameHistory)
+        +removeGame(game : BoardGame) void
+        +getGames() List~BoardGame~
+    }
+
+    class ViewAllGamesLogic {
+        -gameRepository : GameRepository
+        +ViewAllGamesLogic(gameRepository : GameRepository)
+        +viewAllGames() List~BoardGame~
+    }
+
+    class RecommendGameLogic {
+        -gameRepository : GameRepository
+        +RecommendGameLogic(gameRepository : GameRepository)
+        +recommendGame(nbPlayer : int) Optional~BoardGame~
+    }
+
+    class GetRandomGamesLogic {
+        -gameRepository : GameRepository
+        +GetRandomGamesLogic(gameRepository : GameRepository)
+        +getRandomGames(count : int) List~BoardGame~
+    }
+
+    class GetAllGamesNumberMatchLogic {
+        -gameRepository : GameRepository
+        -viewAllGamesLogic : ViewAllGamesLogic
+        +GetAllGamesNumberMatchLogic(gameRepository : GameRepository, viewAllGamesLogic : ViewAllGamesLogic)
+        +getAllGamesNumberMatch(nbPlayer : int) List~BoardGame~
+    }
+
+    class UndoLogic {
+        -history : GameHistory
+        +UndoLogic(history : GameHistory)
+        +undo() String
+    }
+
+    %% Data
+    class GameRepository {
+        <<interface>>
+        +getAll() List~BoardGame~
+        +add(game : BoardGame) void
+        +remove(game : BoardGame) void
+    }
+
+    class JsonGameRepository {
+        -filepath : String
+        -mapper : ObjectMapper
+        +JsonGameRepository(filepath : String)
+        +getAll() List~BoardGame~
+        +add(game : BoardGame) void
+        +remove(game : BoardGame) void
+        +save(games : List~BoardGame~) void
+    }
+
+    class CsvGameRepository {
+        -filePath : String
+        +CsvGameRepository(filePath : String)
+        +getAll() List~BoardGame~
+        +add(game : BoardGame) void
+        +remove(game : BoardGame) void
+        +save(games : List~BoardGame~) void
+    }
+
+    class DataFactory {
+        +createRepository(fileName : String) GameRepository
+    }
+
+    %% Command
+    class Command {
+        <<interface>>
+        +execute() void
+        +getDescription() String
+    }
+
+    class CommandFactory {
+        -gameRepository : GameRepository
+        -gameHistory : GameHistory
+        -scanner : Scanner
+        +CommandFactory(gameRepository : GameRepository, gameHistory : GameHistory, scanner : Scanner)
+        +createCommands() List~Command~
+        -isWeekend() Boolean
+    }
+
+    class AddGameCommand {
+        -addGameLogic : AddGameLogic
+        -userInput : UserInput
+        -gameUI : GameUI
+        +AddGameCommand(addGameLogic : AddGameLogic, userInput : UserInput)
+        +execute() void
+        +getDescription() String
+    }
+
+    class RemoveGameCommand {
+        -removeGameLogic : RemoveGameLogic
+        -userInput : UserInput
+        +RemoveGameCommand(removeGameLogic : RemoveGameLogic, userInput : UserInput)
+        +execute() void
+        +getDescription() String
+    }
+
+    class ListGameCommand {
+        -viewAllGamesLogic : ViewAllGamesLogic
+        -gameUI : GameUI
+        +ListGameCommand(viewAllGamesLogic : ViewAllGamesLogic)
+        +execute() void
+        +getDescription() String
+    }
+
+    class RecommendGameCommand {
+        -recommendGameLogic : RecommendGameLogic
+        -userInput : UserInput
+        -gameUI : GameUI
+        +RecommendGameCommand(recommendGameLogic : RecommendGameLogic, userInput : UserInput)
+        +execute() void
+        +getDescription() String
+    }
+
+    class SummaryCommand {
+        -getRandomGamesLogic : GetRandomGamesLogic
+        -gameUI : GameUI
+        +SummaryCommand(getRandomGamesLogic : GetRandomGamesLogic)
+        +execute() void
+        +getDescription() String
+    }
+
+    class UndoCommand {
+        -undoLogic : UndoLogic
+        -gameUI : GameUI
+        +UndoCommand(undoLogic : UndoLogic)
+        +execute() void
+        +getDescription() String
+    }
+
+    class AllGamesNumberMatchCommand {
+        -getAllGamesNumberMatchLogic : GetAllGamesNumberMatchLogic
+        -userInput : UserInput
+        -gameUI : GameUI
+        +AllGamesNumberMatchCommand(getAllGamesNumberMatchLogic : GetAllGamesNumberMatchLogic, userInput : UserInput)
+        +execute() void
+        +getDescription() String
+    }
+
+    class TournamentCommand {
+        -getAllGamesNumberMatchLogic : GetAllGamesNumberMatchLogic
+        -userInput : UserInput
+        -gameUI : GameUI
+        +TournamentCommand(getAllGamesNumberMatchLogic : GetAllGamesNumberMatchLogic, userInput : UserInput)
+        +execute() void
+        +getDescription() String
+    }
+
+    class ExitCommand {
+        +ExitCommand()
+        +execute() void
+        +getDescription() String
+    }
+
+    %% UI
+    class GameUI {
+        +showErrorAlreadyExist(title : String) void
+        +showSuccessAddGame(title : String) void
+        +showErrorEmptyList() void
+        +showGame(game : BoardGame) void
+        +showErrorNoMatch() void
+        +showRecommendedGame(recommended : BoardGame) void
+        +showErrorNotEnoughGames(count : int) void
+        +showList(games : List~BoardGame~) void
+        +showSummary(games : List~BoardGame~) void
+        +showError(message : String) void
+        +showTournamentModeHeader() void
+        +showAvailable2PlayerGames(games : List~BoardGame~) void
+        +showChooseTournamentFormat() void
+        +showMatchHeader(currentMatch : int, totalMatches : int) void
+        +showMatchup(player1 : String, player2 : String) void
+        +showWinnerPrompt(player1 : String, player2 : String) void
+        +showKingRemains(playerName : String) void
+        +showNewKing(playerName : String) void
+        +showTournamentResults(players : List~Player~) void
+    }
+
+    class UserInput {
+        -scanner : Scanner
+        +UserInput(scanner : Scanner)
+        +getUserInput(prompt : String) String
+    }
+
+    class TournamentUI {
+        <<interface>>
+        +onMatchStart(currentMatch : int, totalMatches : int, player1 : String, player2 : String) void
+        +onKingRemains(playerName : String) void
+        +onNewKing(playerName : String) void
+    }
+
+    class Menu {
+        -commands : List~Command~
+        -scanner : Scanner
+        +Menu(commands : List~Command~, scanner : Scanner)
+        +run() void
+        -displayMainMenu() void
+    }
+
+    %% Tournament
+    class Tournament {
+        <<interface>>
+        +playTournament(players : List~Player~, userInput : UserInput, ui : TournamentUI) void
+    }
+
+    class Championship {
+        +playTournament(players : List~Player~, userInput : UserInput, ui : TournamentUI) void
+    }
+
+    class KingOfTheHill {
+        +playTournament(players : List~Player~, userInput : UserInput, ui : TournamentUI) void
+    }
+
+    class Match {
+        -player1 : Player
+        -player2 : Player
+        -userInput : UserInput
+        +Match(player1 : Player, player2 : Player, userInput : UserInput)
+        +playMatch() Player
+    }
+
+    class Player {
+        -name : String
+        -points : int
+        -wins : int
+        +Player(name : String)
+        +getName() String
+        +getPoints() int
+        +getWins() int
+        +toString() String
+        +addWin() void
+        +addLoss() void
+    }
+
+    Main ..> DataFactory : creates
+    Main ..> GameHistory : creates
+    Main ..> CommandFactory : creates
+    Main ..> Menu : creates
+
+    GameHistory o-- UndoAction : stores
+    AddGameLogic --> GameRepository : uses
+    AddGameLogic --> GameHistory : logs
+    RemoveGameLogic --> GameRepository : uses
+    RemoveGameLogic --> GameHistory : logs
+    ViewAllGamesLogic --> GameRepository : reads
+    RecommendGameLogic --> GameRepository : reads
+    GetRandomGamesLogic --> GameRepository : reads
+    GetAllGamesNumberMatchLogic --> GameRepository : reads
+    GetAllGamesNumberMatchLogic --> ViewAllGamesLogic : sorts
+    UndoLogic --> GameHistory : uses
+
+    JsonGameRepository ..|> GameRepository : implements
+    CsvGameRepository ..|> GameRepository : implements
+    DataFactory ..> GameRepository : creates
+
+    AddGameCommand ..|> Command : implements
+    RemoveGameCommand ..|> Command : implements
+    ListGameCommand ..|> Command : implements
+    RecommendGameCommand ..|> Command : implements
+    SummaryCommand ..|> Command : implements
+    UndoCommand ..|> Command : implements
+    AllGamesNumberMatchCommand ..|> Command : implements
+    TournamentCommand ..|> Command : implements
+    ExitCommand ..|> Command : implements
+
+    CommandFactory --> GameRepository : uses
+    CommandFactory --> GameHistory : uses
+    CommandFactory --> UserInput : creates
+    CommandFactory --> AddGameLogic : creates
+    CommandFactory --> RemoveGameLogic : creates
+    CommandFactory --> ViewAllGamesLogic : creates
+    CommandFactory --> RecommendGameLogic : creates
+    CommandFactory --> GetRandomGamesLogic : creates
+    CommandFactory --> GetAllGamesNumberMatchLogic : creates
+    CommandFactory --> UndoLogic : creates
+
+    AddGameCommand --> AddGameLogic : uses
+    AddGameCommand --> UserInput : reads
+    AddGameCommand --> GameUI : displays
+    RemoveGameCommand --> RemoveGameLogic : uses
+    RemoveGameCommand --> UserInput : reads
+    ListGameCommand --> ViewAllGamesLogic : uses
+    ListGameCommand --> GameUI : displays
+    RecommendGameCommand --> RecommendGameLogic : uses
+    RecommendGameCommand --> UserInput : reads
+    RecommendGameCommand --> GameUI : displays
+    SummaryCommand --> GetRandomGamesLogic : uses
+    SummaryCommand --> GameUI : displays
+    UndoCommand --> UndoLogic : uses
+    UndoCommand --> GameUI : displays
+    AllGamesNumberMatchCommand --> GetAllGamesNumberMatchLogic : uses
+    AllGamesNumberMatchCommand --> UserInput : reads
+    AllGamesNumberMatchCommand --> GameUI : displays
+    TournamentCommand --> GetAllGamesNumberMatchLogic : filters
+    TournamentCommand --> UserInput : reads
+    TournamentCommand --> GameUI : displays
+    TournamentCommand --> TournamentUI : creates
+    TournamentCommand --> Tournament : selects
+
+    Menu --> Command : executes
+    GameUI --> BoardGame : renders
+    GameUI --> Player : renders
+
+    Championship ..|> Tournament : implements
+    KingOfTheHill ..|> Tournament : implements
+    Championship --> Match : creates
+    KingOfTheHill --> Match : creates
+    Match --> Player : updates
+    Match --> UserInput : reads
+    Tournament --> TournamentUI : notifies
