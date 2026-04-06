@@ -1,7 +1,6 @@
 package fr.fges.command;
 
 import fr.fges.BoardGame;
-import fr.fges.GameCollection;
 import fr.fges.GameResearch;
 import fr.fges.GameUI;
 import fr.fges.tournament.Championship;
@@ -13,11 +12,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class TournamentCommand extends InteractiveCommand {
+public class TournamentCommand implements Command {
+    private final GameResearch gameResearch;
+    private final UserInput userInput;
+    private final Scanner scanner;
     private final GameUI gameUI = new GameUI();
 
-    public TournamentCommand(GameCollection gameCollection, Scanner scanner, GameResearch gameResearch) {
-        super(gameCollection, scanner, gameResearch);
+    public TournamentCommand(GameResearch gameResearch, UserInput userInput, Scanner scanner) {
+        this.gameResearch = gameResearch;
+        this.userInput = userInput;
+        this.scanner = scanner;
     }
 
     @Override
@@ -35,7 +39,7 @@ public class TournamentCommand extends InteractiveCommand {
 
             gameUI.showAvailable2PlayerGames(availableGames);
 
-            String gameChoice = getUserInput("Select game (1-" + availableGames.size() + ")");
+            String gameChoice = userInput.getUserInput("Select game (1-" + availableGames.size() + ")");
             int gameIndex;
             try {
                 gameIndex = Integer.parseInt(gameChoice) - 1;
@@ -48,7 +52,7 @@ public class TournamentCommand extends InteractiveCommand {
                 return;
             }
 
-            String nbParticipantsStr = getUserInput("Number of participants (3-8)");
+            String nbParticipantsStr = userInput.getUserInput("Number of participants (3-8)");
             int nbParticipants;
             try {
                 nbParticipants = Integer.parseInt(nbParticipantsStr);
@@ -63,12 +67,12 @@ public class TournamentCommand extends InteractiveCommand {
 
             List<Player> players = new ArrayList<>();
             for (int i = 0; i < nbParticipants; i++) {
-                String playerName = getUserInput("Enter player " + (i + 1) + " name");
+                String playerName = userInput.getUserInput("Enter player " + (i + 1) + " name");
                 players.add(new Player(playerName));
             }
 
             gameUI.showChooseTournamentFormat();
-            String formatChoice = getUserInput("Select format (1-2)");
+            String formatChoice = userInput.getUserInput("Select format (1-2)");
 
             Tournament tournament;
             if ("1".equals(formatChoice)) {

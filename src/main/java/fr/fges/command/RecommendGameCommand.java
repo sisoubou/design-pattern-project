@@ -1,23 +1,23 @@
 package fr.fges.command;
 
 import fr.fges.BoardGame;
-import fr.fges.GameCollection;
 import fr.fges.GameResearch;
 import fr.fges.GameUI;
 
 import java.util.Optional;
-import java.util.Scanner;
-
-public class RecommendGameCommand extends InteractiveCommand {
+public class RecommendGameCommand implements Command {
+    private final GameResearch gameResearch;
+    private final UserInput userInput;
     public final GameUI gameUI = new GameUI();
 
-    protected RecommendGameCommand(GameCollection gameCollection, Scanner scanner, GameResearch gameResearch) {
-        super(gameCollection, scanner, gameResearch);
+    public RecommendGameCommand(GameResearch gameResearch, UserInput userInput) {
+        this.gameResearch = gameResearch;
+        this.userInput = userInput;
     }
 
     @Override
     public void execute() {
-        String nbPlayerStr = getUserInput("How many players ?");
+        String nbPlayerStr = userInput.getUserInput("How many players ?");
         int nbPlayer = Integer.parseInt(nbPlayerStr);
 
         Optional<BoardGame> game = gameResearch.recommendGame(nbPlayer);

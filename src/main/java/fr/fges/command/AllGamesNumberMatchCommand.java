@@ -1,24 +1,24 @@
 package fr.fges.command;
 
 import fr.fges.BoardGame;
-import fr.fges.GameCollection;
 import fr.fges.GameResearch;
 import fr.fges.GameUI;
 
 import java.util.List;
-import java.util.Scanner;
-
-public class AllGamesNumberMatchCommand extends InteractiveCommand {
+public class AllGamesNumberMatchCommand implements Command {
+    private final GameResearch gameResearch;
+    private final UserInput userInput;
     public final GameUI gameUI = new GameUI();
 
-    protected AllGamesNumberMatchCommand(GameCollection gameCollection, Scanner scanner, GameResearch gameResearch) {
-        super(gameCollection, scanner, gameResearch);
+    public AllGamesNumberMatchCommand(GameResearch gameResearch, UserInput userInput) {
+        this.gameResearch = gameResearch;
+        this.userInput = userInput;
     }
 
 
     @Override
     public void execute() {
-        String nbPlayersSTR = getUserInput("Number of players");
+        String nbPlayersSTR = userInput.getUserInput("Number of players");
         Integer nbPlayers = Integer.parseInt(nbPlayersSTR);
         try {
             List<BoardGame> allGamesMatch = gameResearch.getAllGamesNumberMatch(nbPlayers);

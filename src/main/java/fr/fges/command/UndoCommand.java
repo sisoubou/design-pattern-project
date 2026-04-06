@@ -1,17 +1,12 @@
 package fr.fges.command;
 
-import fr.fges.GameCollection;
-import fr.fges.GameResearch;
 import fr.fges.GameUI;
 
-import java.util.Scanner;
-
-public class UndoCommand extends InteractiveCommand {
+public class UndoCommand implements Command {
     private final CommandHistory history;
     private final GameUI gameUI = new GameUI();
 
-    protected UndoCommand(GameCollection gameCollection, Scanner scanner, GameResearch gameResearch, CommandHistory history) {
-        super(gameCollection, scanner, gameResearch);
+    public UndoCommand(CommandHistory history) {
         this.history = history;
     }
 

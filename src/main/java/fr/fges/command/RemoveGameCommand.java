@@ -2,24 +2,24 @@ package fr.fges.command;
 
 import fr.fges.BoardGame;
 import fr.fges.GameCollection;
-import fr.fges.GameResearch;
 import fr.fges.GameUI;
 
-import java.util.Scanner;
-
-public class RemoveGameCommand extends InteractiveCommand {
+public class RemoveGameCommand implements Command {
+    private final GameCollection gameCollection;
+    private final UserInput userInput;
     private final GameUI gameUI = new GameUI();
     private final CommandHistory history;
 
-    protected RemoveGameCommand(GameCollection gameCollection, Scanner scanner, GameResearch gameResearch, CommandHistory history) {
-        super(gameCollection, scanner, gameResearch);
+    public RemoveGameCommand(GameCollection gameCollection, UserInput userInput, CommandHistory history) {
+        this.gameCollection = gameCollection;
+        this.userInput = userInput;
         this.history = history;
     }
 
 
     @Override
     public void execute() {
-        String title = getUserInput("Title of game to remove");
+        String title = userInput.getUserInput("Title of game to remove");
         var games = gameCollection.getGames();
 
         for (BoardGame game : games) {

@@ -23,29 +23,30 @@ public class CommandFactory {
     public Map<String, Command> createCommands() {
         Map<String, Command> commands = new LinkedHashMap<>();
         CommandHistory history = new CommandHistory();
+        UserInput userInput = new UserInput(scanner);
 
-        commands.put("1", new AddGameCommand(gameCollection, scanner, gameResearch, history));
-        commands.put("2", new RemoveGameCommand(gameCollection, scanner, gameResearch, history));
-        commands.put("3", new ListGameCommand(gameCollection,null, gameResearch));
-        commands.put("4", new RecommendGameCommand(gameCollection, scanner, gameResearch));
+        commands.put("1", new AddGameCommand(gameCollection, userInput, history));
+        commands.put("2", new RemoveGameCommand(gameCollection, userInput, history));
+        commands.put("3", new ListGameCommand(gameCollection));
+        commands.put("4", new RecommendGameCommand(gameResearch, userInput));
 
         if (isWeekend()){
-            commands.put("5", new SummaryCommand(gameCollection, scanner, gameResearch));
-            commands.put("6", new UndoCommand(gameCollection, scanner, gameResearch, history));
-            commands.put("7", new AllGamesNumberMatchCommand(gameCollection, scanner, gameResearch));
-            commands.put("8", new TournamentCommand(gameCollection, scanner, gameResearch));
-            commands.put("9", new ExitCommand(null, null, null));
+            commands.put("5", new SummaryCommand(gameResearch));
+            commands.put("6", new UndoCommand(history));
+            commands.put("7", new AllGamesNumberMatchCommand(gameResearch, userInput));
+            commands.put("8", new TournamentCommand(gameResearch, userInput, scanner));
+            commands.put("9", new ExitCommand());
             return commands;
         }else {
-            commands.put("5", new UndoCommand(gameCollection, scanner, gameResearch, history));
-            commands.put("6", new AllGamesNumberMatchCommand(gameCollection, scanner, gameResearch));
-            commands.put("7", new TournamentCommand(gameCollection, scanner, gameResearch));
-            commands.put("8", new ExitCommand(null, null, null));
+            commands.put("5", new UndoCommand(history));
+            commands.put("6", new AllGamesNumberMatchCommand(gameResearch, userInput));
+            commands.put("7", new TournamentCommand(gameResearch, userInput, scanner));
+            commands.put("8", new ExitCommand());
             return commands;
         }
     }
 
-    private Boolean isWeekend(){
+    private Boolean isWeekend() {
         DayOfWeek today = LocalDate.now().getDayOfWeek();
         return today == DayOfWeek.SATURDAY || today == DayOfWeek.SUNDAY;
     }

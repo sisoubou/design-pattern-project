@@ -2,27 +2,27 @@ package fr.fges.command;
 
 import fr.fges.BoardGame;
 import fr.fges.GameCollection;
-import fr.fges.GameResearch;
 import fr.fges.GameUI;
 
-import java.util.Scanner;
-
-public class AddGameCommand extends InteractiveCommand {
+public class AddGameCommand implements Command {
+    private final GameCollection gameCollection;
+    private final UserInput userInput;
     private final GameUI gameUI = new GameUI();
     private final CommandHistory history;
 
-    protected AddGameCommand(GameCollection gameCollection, Scanner scanner, GameResearch gameResearch, CommandHistory history) {
-        super(gameCollection, scanner, gameResearch);
+    public AddGameCommand(GameCollection gameCollection, UserInput userInput, CommandHistory history) {
+        this.gameCollection = gameCollection;
+        this.userInput = userInput;
         this.history = history;
     }
 
 
     @Override
     public void execute() {
-        String title = getUserInput("Title");
-        String minPlayersStr = getUserInput("Minimum Players");
-        String maxPlayersStr = getUserInput("Maximum Players");
-        String category = getUserInput("Category (e.g., fantasy, cooperative, family, strategy)");
+        String title = userInput.getUserInput("Title");
+        String minPlayersStr = userInput.getUserInput("Minimum Players");
+        String maxPlayersStr = userInput.getUserInput("Maximum Players");
+        String category = userInput.getUserInput("Category (e.g., fantasy, cooperative, family, strategy)");
 
         try {
             int minPlayers = Integer.parseInt(minPlayersStr);
