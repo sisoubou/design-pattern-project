@@ -1,6 +1,6 @@
 package fr.fges.data;
 
-import fr.fges.BoardGame;
+import fr.fges.business.BoardGame;
 
 import java.io.*;
 import java.util.ArrayList;

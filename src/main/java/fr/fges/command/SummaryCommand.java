@@ -1,7 +1,7 @@
 package fr.fges.command;
 
-import fr.fges.BoardGame;
-import fr.fges.GameResearch;
+import fr.fges.business.BoardGame;
+import fr.fges.business.GameResearch;
 import fr.fges.ui.GameUI;
 
 import java.util.List;

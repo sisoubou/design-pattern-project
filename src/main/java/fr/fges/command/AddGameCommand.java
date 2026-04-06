@@ -1,8 +1,9 @@
 package fr.fges.command;
 
-import fr.fges.BoardGame;
-import fr.fges.GameCollection;
+import fr.fges.business.BoardGame;
+import fr.fges.business.GameCollection;
 import fr.fges.ui.GameUI;
+import fr.fges.ui.UserInput;
 
 public class AddGameCommand implements Command {
     private final GameCollection gameCollection;

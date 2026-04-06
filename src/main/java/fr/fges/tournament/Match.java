@@ -1,6 +1,6 @@
 package fr.fges.tournament;
 
-import fr.fges.command.UserInput;
+import fr.fges.ui.UserInput;
 
 public class Match {
     private final Player player1;

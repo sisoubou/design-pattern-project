@@ -1,6 +1,6 @@
 package fr.fges.command;
 
-import fr.fges.GameCollection;
+import fr.fges.business.GameCollection;
 import fr.fges.ui.GameUI;
 
 public class UndoCommand implements Command {

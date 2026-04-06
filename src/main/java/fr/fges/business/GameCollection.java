@@ -1,4 +1,4 @@
-package fr.fges;
+package fr.fges.business;
 
 import fr.fges.data.GameRepository;
 

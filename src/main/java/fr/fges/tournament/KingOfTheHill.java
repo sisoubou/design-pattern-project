@@ -1,6 +1,6 @@
 package fr.fges.tournament;
 
-import fr.fges.command.UserInput;
+import fr.fges.ui.UserInput;
 import fr.fges.ui.TournamentUI;
 
 import java.util.List;

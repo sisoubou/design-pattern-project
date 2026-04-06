@@ -1,4 +1,4 @@
-package fr.fges.command;
+package fr.fges.ui;
 
 import java.util.Scanner;
 

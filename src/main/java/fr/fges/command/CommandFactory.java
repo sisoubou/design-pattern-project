@@ -1,7 +1,8 @@
 package fr.fges.command;
 
-import fr.fges.GameCollection;
-import fr.fges.GameResearch;
+import fr.fges.business.GameCollection;
+import fr.fges.business.GameResearch;
+import fr.fges.ui.UserInput;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;

@@ -1,13 +1,14 @@
 package fr.fges.command;
 
-import fr.fges.BoardGame;
-import fr.fges.GameResearch;
+import fr.fges.business.BoardGame;
+import fr.fges.business.GameResearch;
 import fr.fges.ui.GameUI;
 import fr.fges.ui.TournamentUI;
 import fr.fges.tournament.Championship;
 import fr.fges.tournament.KingOfTheHill;
 import fr.fges.tournament.Player;
 import fr.fges.tournament.Tournament;
+import fr.fges.ui.UserInput;
 
 import java.util.ArrayList;
 import java.util.List;

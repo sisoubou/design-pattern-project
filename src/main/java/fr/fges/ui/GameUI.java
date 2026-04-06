@@ -2,7 +2,7 @@ package fr.fges.ui;
 
 import java.util.List;
 
-import fr.fges.BoardGame;
+import fr.fges.business.BoardGame;
 
 public class GameUI {
     public void showErrorAlreadyExist(String title) {

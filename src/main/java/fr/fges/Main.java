@@ -1,9 +1,12 @@
 package fr.fges;
 
+import fr.fges.business.GameCollection;
+import fr.fges.business.GameResearch;
 import fr.fges.command.Command;
 import fr.fges.command.CommandFactory;
 import fr.fges.data.DataFactory;
 import fr.fges.data.GameRepository;
+import fr.fges.ui.Menu;
 
 import java.util.List;
 import java.util.Scanner;
