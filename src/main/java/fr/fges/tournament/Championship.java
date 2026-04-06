@@ -1,24 +1,18 @@
 package fr.fges.tournament;
 
-import fr.fges.GameUI;
+import fr.fges.command.UserInput;
+import fr.fges.ui.TournamentUI;
+
 import java.util.List;
-import java.util.Scanner;
 
 public class Championship implements Tournament {
-    private final GameUI gameUI;
-
-    public Championship(GameUI gameUI) {
-        this.gameUI = gameUI;
-    }
 
     @Override
-    public void playTournament(List<Player> players, Scanner scanner) {
-        if (players.isEmpty() || players.size() < 2) {
-            gameUI.showError("Not enough players for a tournament.");
-            return;
+    public void playTournament(List<Player> players, UserInput userInput, TournamentUI ui) {
+        if (players.size() < 2) {
+            throw new IllegalArgumentException("Not enough players for a tournament.");
         }
 
-        // Calculate total number of matches
         int totalMatches = (players.size() * (players.size() - 1)) / 2;
         int currentMatch = 0;
 
@@ -29,10 +23,9 @@ public class Championship implements Tournament {
                 Player player1 = players.get(i);
                 Player player2 = players.get(j);
 
-                gameUI.showMatchHeader(currentMatch, totalMatches);
-                gameUI.showMatchup(player1.getName(), player2.getName());
+                ui.onMatchStart(currentMatch, totalMatches, player1.getName(), player2.getName());
 
-                Match match = new Match(player1, player2, scanner, gameUI);
+                Match match = new Match(player1, player2, userInput);
                 match.playMatch();
             }
         }

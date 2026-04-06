@@ -35,7 +35,7 @@ public class CommandFactory {
         
         commands.add(new UndoCommand(gameCollection));
         commands.add(new AllGamesNumberMatchCommand(gameResearch, userInput));
-        commands.add(new TournamentCommand(gameResearch, userInput, scanner));
+        commands.add(new TournamentCommand(gameResearch, userInput));
         commands.add(new ExitCommand());
         
         return commands;

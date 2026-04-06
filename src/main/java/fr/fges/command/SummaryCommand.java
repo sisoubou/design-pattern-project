@@ -2,7 +2,7 @@ package fr.fges.command;
 
 import fr.fges.BoardGame;
 import fr.fges.GameResearch;
-import fr.fges.GameUI;
+import fr.fges.ui.GameUI;
 
 import java.util.List;
 public class SummaryCommand implements Command {

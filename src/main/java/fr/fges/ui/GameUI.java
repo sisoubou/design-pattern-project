@@ -1,9 +1,11 @@
-package fr.fges;
+package fr.fges.ui;
 
 import java.util.List;
 
+import fr.fges.BoardGame;
+
 public class GameUI {
-    public void showErrorAlreadyExist(String title){
+    public void showErrorAlreadyExist(String title) {
         System.err.println("Error: A game with title '" + title + "' already exists in the collection.");
     }
 
@@ -15,8 +17,9 @@ public class GameUI {
         System.err.println("No board games in collection.");
     }
 
-    public void showGame(BoardGame game){
-        System.out.println("Game: " + game.title() + " (" + game.minPlayers() + "-" + game.maxPlayers() + " players) - " + game.category());
+    public void showGame(BoardGame game) {
+        System.out.println("Game: " + game.title() + " (" + game.minPlayers() + "-" + game.maxPlayers() + " players) - "
+                + game.category());
     }
 
     public void showErrorNoMatch() {
@@ -24,27 +27,28 @@ public class GameUI {
     }
 
     public void showRecommendedGame(BoardGame recommended) {
-        System.out.println("Recommended Game: " + recommended.title() + " (" + recommended.minPlayers() + "-" + recommended.maxPlayers() + " players) - " + recommended.category());
+        System.out.println("Recommended Game: " + recommended.title() + " (" + recommended.minPlayers() + "-"
+                + recommended.maxPlayers() + " players) - " + recommended.category());
     }
 
     public void showErrorNotEnoughGames(int count) {
         System.out.println("Not enough games in collection to get " + count + " random games.");
     }
 
-    public void showList(List<BoardGame> games){
-        if (games.isEmpty()){
+    public void showList(List<BoardGame> games) {
+        if (games.isEmpty()) {
             System.out.println("No board game in collection");
             return;
         }
         games.forEach(this::showGame);
     }
 
-    public void showSummary(List<BoardGame> games){
+    public void showSummary(List<BoardGame> games) {
         System.out.println("== Summary (" + games.size() + " random games) ==");
         games.forEach(this::showGame);
     }
 
-    public void showError(String message){
+    public void showError(String message) {
         System.err.println(message);
     }
 
@@ -89,8 +93,8 @@ public class GameUI {
     public void showTournamentResults(List<fr.fges.tournament.Player> players) {
         System.out.println("\n=== Tournament Results ===");
         java.util.List<fr.fges.tournament.Player> sorted = players.stream()
-            .sorted((p1, p2) -> Integer.compare(p2.getPoints(), p1.getPoints()))
-            .toList();
+                .sorted((p1, p2) -> Integer.compare(p2.getPoints(), p1.getPoints()))
+                .toList();
         for (int i = 0; i < sorted.size(); i++) {
             fr.fges.tournament.Player player = sorted.get(i);
             System.out.println((i + 1) + ". " + player);

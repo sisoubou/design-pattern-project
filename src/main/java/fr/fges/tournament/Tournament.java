@@ -1,8 +1,10 @@
 package fr.fges.tournament;
 
+import fr.fges.command.UserInput;
+import fr.fges.ui.TournamentUI;
+
 import java.util.List;
-import java.util.Scanner;
 
 public interface Tournament {
-    void playTournament(List<Player> players, Scanner scanner);
+    void playTournament(List<Player> players, UserInput userInput, TournamentUI ui);
 }

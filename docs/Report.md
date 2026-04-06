@@ -25,9 +25,6 @@ We also created new factories, including CommandFactory and DataFactory.
 Additionally, we improved the code structure by organizing it into new packages.
 
 
-menu -> faire une liste au lieu de map ce qui permet de ne pas mettre deux if faire un for pour l'affichage 
-enlever les logs pas utiles -> mettre pluto des erreurs log dans data 
-tournoi -> 
 tournament command -> bonne idee les deux classes mais enelever l'ui dans les tournoi notammenet methodes prive mais pas d'ui peut petre ajouter des classes 
 faire un catch au lieu showerror dans championnish au debut et pareil dans l'autre 
 recouper encore gamecollection et gameresearch -> decoupage encore plus -> faire un package business 
